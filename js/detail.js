@@ -1,1 +1,9 @@
-// 상세페이지 이제 할거예용
+import { handleAddReviews, loadReviews } from "./review.js"
+
+const $reviewsForm = document.querySelector("#review-form");
+$reviewsForm.addEventListener('submit', handleAddReviews);
+
+
+(function init(){
+    loadReviews();
+})()

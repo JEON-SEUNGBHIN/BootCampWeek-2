@@ -128,16 +128,16 @@
   display: flex;
 }
 
-.comments {
+.reviews {
   width: 100%;
 }
 
-#comments-form > p{
+#review-form > p{
   line-height: 3rem;
   font-size: 1.1rem;
 }
 
-.comments-input {
+.review-input {
   width: 100%;
   height: 43px;
   display: flex;
@@ -145,7 +145,7 @@
   justify-content: center;
 }
 
-.comments-input input {
+.review-input input {
   width: calc(100% - 70px);
   height: 43px;
   padding: 13px 12px 10px;
@@ -154,11 +154,11 @@
   outline: none;
 }
 
-.comments-input input::placeholder {
+.review-input input::placeholder {
   color: #ccc;
 }
 
-.comments-input button {
+.review-input button {
   width: 70px;
   height: 43px;
   color: #fff;
@@ -167,18 +167,18 @@
   border: 1px solid rgba(0,0,0,.1);
 }
 
-.comments-box .comment {
+#review-list .review {
   width: calc(100% - 20px);
   margin: 0 10px;
   padding: 20px 0;
   border-bottom: 1px solid #ccc;
 }
 
-.comments-box .comment-name {
+#review-list .review-name {
   margin-bottom: 12px;
 }
 
-.comments-box .comment-bottom {
+#review-list .review-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -186,15 +186,15 @@
 
 }
 
-.comment-text {margin-bottom: 10px;}
+.review-text {margin-bottom: 10px;}
 
-.comment-button {
+.review-button {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.comment-button button {
+.review-button button {
   background-color: #333;
   color: #fff;
   padding: 5px 15px;
