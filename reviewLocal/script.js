@@ -66,16 +66,21 @@ function paintReview(text, userId, password) {
   const delBtn = document.createElement("button");
   const updateBtn = document.createElement("button");
   const span = document.createElement("span");
+  const timeSpan = document.createElement("span"); // 새로 추가한 부분
   const newId = reviews.length;
   //span은 리뷰의 텍스트를 담을 요소, newID는 새로운 리뷰를 배열에 추가할 때 사용할 새로운 id
+  const currentTime = new Date(); // 현재 시간을 얻음
 
   delBtn.innerText = "리뷰 삭제";
   updateBtn.innerText = "리뷰 수정";
   delBtn.addEventListener("click", deleteReview);
   updateBtn.addEventListener("click", updateReview);
   span.innerText = text;
+  timeSpan.innerText = currentTime.toLocaleString(); // 시간을 문자열로 변환하여 출력
+
 
   li.appendChild(span);
+  li.appendChild(timeSpan); // 시간 추가
   li.appendChild(delBtn);
   li.appendChild(updateBtn);
   //li요소에 각각 요소를 추가하여 화면에 표시
@@ -88,6 +93,7 @@ function paintReview(text, userId, password) {
     text,
     userId,
     password,
+    time: currentTime.getTime() // 현재 시간을 밀리초로 변환하여 저장
   };
   //새로운 리뷰에 대한 객체 생성
 
@@ -117,7 +123,7 @@ function handleSubmit(event) {
   }
 
   paintReview(currentReview, currentUserId, currentPassword);
-  //입력된 리뷰 내용과 사용자 정보를 기반ㅇ으로 함수를 호출하여 새로운 리뷰를 화면에 추가
+  //입력된 리뷰 내용과 사용자 정보를 기반으로 함수를 호출하여 새로운 리뷰를 화면에 추가
   reviewInput.value = "";
   userIdInput.value = "";
   passwordInput.value = "";
