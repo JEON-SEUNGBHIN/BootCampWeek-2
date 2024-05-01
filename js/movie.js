@@ -35,23 +35,26 @@ const ApiFetch = async (url) => {
     return json;
 }
 
+export const handleMovieItemClick = (e) => {
+  const movieId = e.currentTarget.dataset.movieId; // 클릭된 영화 아이템의 데이터 속성에서 영화 ID 가져오기
+  window.location.href = `detail.html?id=${movieId}`; // detail.html로 이동하면서 영화 ID를 쿼리 파라미터로 전달
+}
+
 const createMovieList = async (movies)  => {
-    $movieList.textContent = '';
-    const movieListHTML = movies.map((e) =>
-        `
-        <div class="movie ${e.id}" onClick="alert('영화 id: ${e.id}')">
-            <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
-            <div class="hover">
-                <h3 class="title bold">
-                ${e.title}
-                </h3>
-                <p>
-                ${e.overview}
-                </p>
-                <span>평점: ${e.vote_average}</span>
-            </div>
-        </div>
-        `
-    ).join("");
-    $movieList.insertAdjacentHTML('beforeend', movieListHTML);
+  $movieList.textContent = '';
+  movies.forEach((e) => {
+      const movieItem = document.createElement('div');
+      movieItem.classList.add('movie');
+      movieItem.dataset.movieId = e.id;
+      movieItem.innerHTML = `
+          <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
+          <div class="hover">
+              <h3 class="title bold">${e.title}</h3>
+              <p>${e.overview}</p>
+              <span>평점: ${e.vote_average}</span>
+          </div>
+      `;
+      movieItem.addEventListener('click', handleMovieItemClick);
+      $movieList.appendChild(movieItem);
+  });
 }
