@@ -21,18 +21,19 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('https://i.namu.wiki/i/OHj59ojnhpp9PdEkNrBxENXjGFj4zUbWTCQwwmCV74LfsIabB8WvuCeVRcnGIGpnpgoN60opfYgIpvEsUfGnHQ.webp');
   background-size: cover;
   background-position: center;
-  filter: blur(10px); /* 배경 이미지를 블러 처리 */
-  opacity: 0.8; /* 투명도를 조절하여 어둡게 표현 */
+  filter: contrast(50%);
   z-index: 1; /* 배경 이미지를 가장 아래에 표시 */
 }
+
 
 .detail_img{
   position: absolute;
   width: 100%;
   height: 100%;
+  background-size: cover;
+  background-position: center;
   opacity: 0.8; /* 투명도를 조절하여 어둡게 표현 */
   z-index: 2; /* 이미지를 배경 이미지 위로 올리기 위해 */
 }
@@ -64,22 +65,22 @@
   margin-left: 1rem;
   border: 0;
   background-color: transparent;
-  font-size: 100%;
 }
 
+/* 이거 버튼 클릭할 때 이벤트 처리 필요하면 스타일 변경해서 쓰세오 */
 #heart_btn_true{
   color: red;
 }
 
 .detail_box_hr{
   width: 100%;
-  margin: 1rem;
+  margin: 10px;
 }
 
 .detail_box2 {
   display: flex;
   width: 100%;
-  margin-top: 0.3rem;
+  margin: 0.3rem;
 }
 
 .detail_scores{
@@ -92,7 +93,7 @@
 
 #scores{
   color: rgb(252, 60, 60);
-  margin-right: 0.2rem;
+  margin-right: 0.3rem;
 }
 
 .detail_box3{
