@@ -16,7 +16,7 @@ export const movieListAPI = async (url = "/3/movie/popular?language=en-US&page=1
     await createMovieList(movies);
 } 
 
-const ApiFetch = async (url) => {
+export const ApiFetch = async (url) => {
     let json;
     const options = {
         method: 'GET',
@@ -41,20 +41,22 @@ export const handleMovieItemClick = (e) => {
 }
 
 const createMovieList = async (movies)  => {
-  $movieList.textContent = '';
-  movies.forEach((e) => {
-      const movieItem = document.createElement('div');
-      movieItem.classList.add('movie');
-      movieItem.dataset.movieId = e.id;
-      movieItem.innerHTML = `
-          <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
-          <div class="hover">
-              <h3 class="title bold">${e.title}</h3>
-              <p>${e.overview}</p>
-              <span>평점: ${e.vote_average}</span>
-          </div>
-      `;
-      movieItem.addEventListener('click', handleMovieItemClick);
-      $movieList.appendChild(movieItem);
-  });
+  $movieList.innerHTML = '';
+    const movieListHTML = movies.map((e) =>
+        `
+        <div class="movie ${e.id}" onClick="alert('영화 id: ${e.id}')">
+            <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
+            <div class="hover">
+                <h3 class="title bold">
+                ${e.title}
+                </h3>
+                <p>
+                ${e.overview}
+                </p>
+                <span>평점: ${e.vote_average}</span>
+            </div>
+        </div>
+        `
+    ).join("");
+    $movieList.insertAdjacentHTML('beforeend', movieListHTML);
 }

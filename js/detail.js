@@ -1,5 +1,4 @@
-// detail.js
-    
+// detail.js    
     // API 키
     const ApiKey = '66f371611b5b7314fe42cbf067b62f1c';
     
@@ -27,7 +26,7 @@
     
         // 출연 배우 정보 추출
         const actors = movieDetails.credits.cast.slice(0, 10);
-      const actorNames = actors.map(actor => actor.name).join(', ');
+        const actorNames = actors.map(actor => actor.name).join(', ');
 
         // detail_main 요소의 innerHTML을 채워 넣음
         detailMain.innerHTML = `
