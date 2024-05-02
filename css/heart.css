@@ -1,0 +1,113 @@
+.heartBtn {
+  width: 100px;
+  height: 100px;
+  background-color: green;
+  cursor: pointer;
+}
+.heartBtn:hover {
+  background-color: red;
+}
+.heartBtn.clicked {
+  background-color: red;
+}
+.heartBtn.clicked:hover {
+  background-color: green;
+}
+
+/* 가연님 기존 찜 목록 페이지 코드 */
+header {
+  height: 200px;
+  padding-top: 30px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ccc;
+}
+.pick_title {
+  font-size: 35px;
+  margin: 50px;
+  text-align: center;
+  justify-content: center;
+  font-family: "S-CoreDream-5Medium";
+  font-weight: 550;
+}
+main {
+  text-align: center;
+  justify-content: center;
+  font-family: "S-CoreDream-5Medium";
+  height: 100vh;
+}
+.pick_view {
+  font-size: 25px;
+  margin-top: 25px;
+  display: inline-block;
+  border-bottom: 4px solid #f02459; /* 밑줄 설정 */
+  padding-bottom: 5px;
+}
+.pick_nothing {
+  width: auto;
+}
+img {
+  width: 100px;
+  height: auto;
+  margin-top: 13%;
+}
+.pick_detail {
+  font-size: 20px;
+  margin-top: 8px;
+}
+.pick_movie {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+#pick_movie-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#pick_movie-list .movie {
+  background-color: #f5f5f5;
+  height: 420px;
+  width: 23%;
+  margin-right: calc(8% / 3);
+  margin-bottom: 30px;
+  position: relative;
+  cursor: pointer;
+}
+#pick_movie-list .movie:nth-child(4n) {
+  margin-right: 0;
+}
+#pick_movie-list .movie > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#pick_movie-list .movie .hover p {
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#pick_movie-list .movie .hover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  opacity: 0;
+  transition: 0.2s opacity;
+}
+#pick_movie-list .movie:hover .hover {
+  opacity: 1;
+}
+#pick_movie-list .movie .hover .title {
+  margin-bottom: 10px;
+}
+#pick_movie-list .movie .hover span {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
