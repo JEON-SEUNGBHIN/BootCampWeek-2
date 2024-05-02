@@ -11,6 +11,21 @@ body {
     position: relative;
 }
 
+.inner_wrap2 {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.inner_wrap2 div {
+    width: calc(100% / 3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .inner_wrap {
     max-width: 1200px;
     margin: 0 auto;
