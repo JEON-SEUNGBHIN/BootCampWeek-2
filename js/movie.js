@@ -1,4 +1,4 @@
-const ApiKey = '21ccf5793f9e51cfba0198fa23b3d541';
+export const ApiKey = '21ccf5793f9e51cfba0198fa23b3d541';
 const ApiToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMWNjZjU3OTNmOWU1MWNmYmEwMTk4ZmEyM2IzZDU0MSIsInN1YiI6IjY2MmEwZDFkYmYzMWYyMDA5YWUzMzAzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sNlesGPpMfB6Nt3ZqEFMSIwcE88KWjPts2Waw_I2qp8';
 
 const $movieList = document.querySelector("#movie-list");
@@ -42,21 +42,27 @@ export const handleMovieItemClick = (e) => {
 
 const createMovieList = async (movies)  => {
   $movieList.innerHTML = '';
-    const movieListHTML = movies.map((e) =>
-        `
-        <div class="movie ${e.id}" onClick="alert('영화 id: ${e.id}')">
-            <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
-            <div class="hover">
-                <h3 class="title bold">
-                ${e.title}
-                </h3>
-                <p>
-                ${e.overview}
-                </p>
-                <span>평점: ${e.vote_average}</span>
-            </div>
-        </div>
-        `
-    ).join("");
-    $movieList.insertAdjacentHTML('beforeend', movieListHTML);
+  const movieListHTML = movies.map((e) =>
+      `
+      <div class="movie ${e.id}" data-movie-id="${e.id}">
+          <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
+          <div class="hover">
+              <h3 class="title bold">
+              ${e.title}
+              </h3>
+              <p>
+              ${e.overview}
+              </p>
+              <span>평점: ${e.vote_average}</span>
+          </div>
+      </div>
+      `
+  ).join("");
+  $movieList.insertAdjacentHTML('beforeend', movieListHTML);
+
+  // 각 영화 항목에 클릭 이벤트 리스너 추가
+  const movieItems = document.querySelectorAll('.movie');
+  movieItems.forEach((movieItem) => {
+      movieItem.addEventListener('click', handleMovieItemClick);
+  });
 }
