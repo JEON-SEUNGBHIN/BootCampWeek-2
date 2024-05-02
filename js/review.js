@@ -1,5 +1,7 @@
 let reviews = [];
 const REVIEWS_LS = "reviews";
+const $reviewList = document.querySelector("#review-list");
+
 
 export const handleAddReviews = (e) => {
     e.preventDefault();
@@ -35,9 +37,29 @@ const saveReviews = () => {
     localStorage.setItem(REVIEWS_LS, JSON.stringify(reviews));
 }
 
+const handelDeleteReview = (event) => {
+  const btn = event.target;
+  const li = btn.parentNode.parentNode.parentNode;
+  //이벤트가 발생한 요소와 그 부모요소인 li찾기
+  const password = prompt("비밀번호를 입력하세요:");
+
+  if (password !== null && password === reviews[li.id].password) {
+    $reviewList.removeChild(li);
+    //일치 여부 확인 후 리뷰 목록에서 해당 리뷰 삭제
+    reviews.splice(li.id, 1);
+    //배열에서 해당 리뷰 삭제
+    saveReviews();
+    //삭제된 리뷰를 로컬 스토리지에 저장
+    alert("삭제되었습니다.");
+  } else {
+    alert("비밀번호가 일치하지 않습니다.");
+  }
+}
+
+
+
 const paintReview = (text, userId, password) => {
     console.log(text, userId, password);
-    const $reviewList = document.querySelector("#review-list");
 
     const $newId = reviews.length;
     const currentTime = new Date();
@@ -61,7 +83,7 @@ const paintReview = (text, userId, password) => {
   
     $delBtn.innerText = "리뷰 삭제";
     $updateBtn.innerText = "리뷰 수정";
-    $delBtn.addEventListener("click", handleAddReviews);
+    $delBtn.addEventListener("click", handelDeleteReview);
     $updateBtn.addEventListener("click", handleAddReviews);
     $id.innerText = userId; // 내용 설정
     $text.innerText = text; // 내용 설정
