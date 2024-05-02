@@ -18,31 +18,20 @@
   margin-bottom: 2rem;
 }
 
-.img_container::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url('https://i.namu.wiki/i/OHj59ojnhpp9PdEkNrBxENXjGFj4zUbWTCQwwmCV74LfsIabB8WvuCeVRcnGIGpnpgoN60opfYgIpvEsUfGnHQ.webp');
-  background-size: cover;
-  background-position: center;
-  filter: blur(10px); /* 배경 이미지를 블러 처리 */
-  opacity: 0.8; /* 투명도를 조절하여 어둡게 표현 */
-  z-index: 1; /* 배경 이미지를 가장 아래에 표시 */
-}
-
 .detail_img{
   position: absolute;
   width: 100%;
   height: 100%;
-  opacity: 0.8; /* 투명도를 조절하여 어둡게 표현 */
-  z-index: 2; /* 이미지를 배경 이미지 위로 올리기 위해 */
+  z-index: 1; 
+  filter: blur(5px);
 }
 
-.detail_img img {
+.detail_main_img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  position: relative;
+  z-index: 2;
 }
 
 .content_container{
@@ -61,26 +50,31 @@
   display: flex;
 }
 
+.detail_box1_hr{
+  background-color: rgb(197, 197, 197);
+  width: 1px;
+  border: 0;
+}
+
 .detail_heart_btn{
   margin-left: 1rem;
   border: 0;
   background-color: transparent;
-  font-size: 100%;
 }
 
+/* 이거 버튼 클릭할 때 이벤트 처리 필요하면 스타일 변경해서 쓰세오 */
 #heart_btn_true{
   color: red;
-}
-
-.detail_box_hr{
-  width: 100%;
-  margin: 1rem;
 }
 
 .detail_box2 {
   display: flex;
   width: 100%;
-  margin-top: 0.3rem;
+  margin: 0.3rem;
+}
+
+.detail_box3_hr{
+  width: 100%;
 }
 
 .detail_scores{
@@ -93,7 +87,7 @@
 
 #scores{
   color: rgb(252, 60, 60);
-  margin-right: 0.2rem;
+  margin-right: 0.3rem;
 }
 
 .detail_box3{
@@ -101,6 +95,7 @@
   flex-direction: column; /* 세로 방향으로 요소를 배치합니다. */
   justify-content: center; /* 수직 가운데 정렬 */
   width: 100%;
+  padding: 1rem 0;
 }
 
 .detail_box3 div, .detail_box3 h4, .detail_box3 h5 {
