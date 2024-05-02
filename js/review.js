@@ -56,6 +56,28 @@ const handelDeleteReview = (event) => {
   }
 }
 
+const handleUpdateReview = (event) => {
+  const btn = event.target;
+  const li = btn.parentNode.parentNode.parentNode;
+  const password = prompt("비밀번호를 입력하세요:");
+
+  if (password !== null && password === reviews[li.id].password) {
+    const newText = prompt("수정할 리뷰를 입력하세요:", reviews[li.id].text);
+    if (newText !== null && newText !== "") {
+      reviews[li.id].text = newText;
+      //배열에 저장된 해당 리븅의 텍스트를 새로운 텍스트로 업데이트
+      li.querySelector("p.review-text").innerText = newText;
+      //화면에 해당 리뷰의 텍스트를 새로운 텍스트로 업데이트
+      saveReviews();
+      //업데이트된 리뷰를 로컬 스토리지에 저장
+    } else {
+      alert("리뷰를 입력하세요.");
+    }
+  } else {
+    alert("비밀번호가 일치하지 않습니다.");
+  }
+}
+
 
 
 const paintReview = (text, userId, password) => {
@@ -84,7 +106,7 @@ const paintReview = (text, userId, password) => {
     $delBtn.innerText = "리뷰 삭제";
     $updateBtn.innerText = "리뷰 수정";
     $delBtn.addEventListener("click", handelDeleteReview);
-    $updateBtn.addEventListener("click", handleAddReviews);
+    $updateBtn.addEventListener("click", handleUpdateReview);
     $id.innerText = userId; // 내용 설정
     $text.innerText = text; // 내용 설정
     $timeSpan.innerText = currentTime.toLocaleString();
