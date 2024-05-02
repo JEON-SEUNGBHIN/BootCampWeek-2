@@ -32,11 +32,10 @@
         // detail_main 요소의 innerHTML을 채워 넣음
         detailMain.innerHTML = `
             <div class="img_container">
-            <div class="detail_img"
-                style="background-image:
-                url('https://image.tmdb.org/t/p/w500${movieDetails.poster_path}')">
-                <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" alt="${movieDetails.title}">
-              </div>
+              <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
+                  alt="${movieDetails.title}" class="detail_img">
+                <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
+                    alt="${movieDetails.title}" class="detail_main_img">
             </div>
             <div class="content_container">
                 <div class="detail_box1">
@@ -57,7 +56,7 @@
                     <hr class="detail_box1_hr">
                     <h5 class="detail_genres">${movieDetails.genres.map(genre => genre.name).join(', ')}</h5>
                 </div>
-                <hr class="detail_box_hr">
+                <hr class="detail_box3_hr">
                 <div class="detail_box3">
                     <div class="detail_director">
                         <h4 class="director_title">감독</h4>
@@ -72,7 +71,7 @@
                         <h5 class="detail_plot">${movieDetails.overview}</h5>
                     </div>
                 </div>
-                <hr class="detail_box_hr">
+                <hr class="detail_box3_hr">
             </div>
         `;
     }
