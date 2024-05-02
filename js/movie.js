@@ -62,17 +62,20 @@ export const handleMovieItemClick = (e) => {
 const createMovieList = async (movies) => {
     $movieList.textContent = '';
     movies.forEach((e) => {
+        if (!e.overview) { // overview 값이 없을 때 순회 제외처리
+            return;
+        }
         const movieItem = document.createElement('div');
         movieItem.classList.add('movie');
         movieItem.dataset.movieId = e.id;
         movieItem.innerHTML = `
-          <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
-          <div class="hover">
-              <h3 class="title bold">${e.title}</h3>
-              <p>${e.overview}</p>
-              <span>평점: ${e.vote_average}</span>
-          </div>
-      `;
+            <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
+            <div class="hover">
+                <h3 class="title bold">${e.title}</h3>
+                <p>${e.overview}</p>
+                <span>${currentLanguage === 'ko-KR' ? '평점' : 'rating'}: ${e.vote_average}</span>
+            </div>
+        `;
         movieItem.addEventListener('click', handleMovieItemClick);
         $movieList.appendChild(movieItem);
     });
