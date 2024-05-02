@@ -1,4 +1,5 @@
 import { handleAddReviews, loadReviews } from "./review.js"
+import { currentLanguage } from "./language.js"
 
 const $reviewsForm = document.querySelector("#review-form");
 $reviewsForm.addEventListener('submit', handleAddReviews);
@@ -15,7 +16,7 @@ const ApiKey = '66f371611b5b7314fe42cbf067b62f1c';
 
 // 영화 상세 데이터를 가져오는 함수
 const fetchMovieDetails = async (movieId) => {
-    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${ApiKey}&language=en-US&append_to_response=credits`;
+    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${ApiKey}&language=${currentLanguage}&append_to_response=credits`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
