@@ -1,8 +1,10 @@
 // import { movieListAPI, handleSearch } from "./movie.js";
+console.log("heart.js");
 const HEART_LS = "hearts";
 let hearts = [];
 
-const heartBtn = document.querySelector(".heartBtn");
+const heartBtn = document.querySelector(".detail_title");
+console.log(heartBtn);
 function clickHeart(event) {
   // 중복값 방지 조건문
   if (!hearts.includes(event.target.id.toString())) {
