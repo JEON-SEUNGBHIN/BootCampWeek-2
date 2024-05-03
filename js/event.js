@@ -1,3 +1,4 @@
+import { currentLanguage } from "./language.js";
 import { movieListAPI } from "./movie.js"
 
 let scrollHeight;
@@ -10,7 +11,7 @@ export const handleMenuSelect = (e) => {
         if (targetBtn.id === "popular") {
             movieListAPI();
         } else if (targetBtn.id === "top_rated") {
-            movieListAPI("/3/movie/top_rated?language=en-US&page=1");
+            movieListAPI(`/3/movie/top_rated?language=${currentLanguage}&page=1`);
         }
         if ($chk) {
             $chk.classList.remove("chk");
@@ -31,8 +32,7 @@ export const handleScrollTop = (e) => {
 export const handleScrollTo = () => {
     $searchInput.focus();
     const scrollY = parseInt(sessionStorage.getItem("scrollY"));
-    if(scrollY && scrollY > 0){
+    if (scrollY && scrollY > 0) {
         window.scrollTo(0, scrollY);
     }
-}   
-    
+}
