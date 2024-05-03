@@ -35,7 +35,7 @@ const getMovieCertifications = async (movieId) => {
               }
           }
       } else {
-          certificationInf = '정보 없음'; // null값인 경우 '정보 없음'으로 설정
+          certificationInf = '정보 없음'; // null값인 경우 '정보 없음'
       }
 
       return { certification: certificationInf };
