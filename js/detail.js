@@ -25,18 +25,18 @@ const getMovieCertifications = async (movieId) => {
       const movieCertifications = await ApiFetch(url);
       const certificationResults = movieCertifications.results;
       
-      let certificationInf = 'No Information';
+      let certificationInf = 'certification';
   
       if (certificationResults && certificationResults.length > 0) {
           for (const result of certificationResults) {
               if (result.iso_3166_1 === 'US') {
                   certificationInf = result.release_dates[0].certification;
                   break; // 미국 정보를 찾으면 반복문 종료
-              } else {
-                certificationInf = '정보 없음'; // null값인 경우 '정보 없음'으로 설정
-            }
+              }
           }
-      } 
+      } else {
+          certificationInf = '정보 없음'; // null값인 경우 '정보 없음'으로 설정
+      }
 
       return { certification: certificationInf };
   } catch (error) {
