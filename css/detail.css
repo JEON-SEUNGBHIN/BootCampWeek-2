@@ -134,6 +134,7 @@
 /* reviews css */
 .reviews {
   width: 100%;
+  padding-bottom: 100px !important;
 }
 
 #review-form > p{

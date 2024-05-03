@@ -5,9 +5,7 @@ import { handleAddReviews, loadReviews } from "./review.js"
 const $reviewsForm = document.querySelector("#review-form");
 $reviewsForm.addEventListener('submit', handleAddReviews);
 
-(function init(){
-    loadReviews();
-})()
+
 
 // API 데이터 관련 
     // 영화 상세 데이터를 가져오는 함수
@@ -79,8 +77,10 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
       `;
     }
     
-    // 페이지 로드 시 영화 상세 데이터 표시
-    window.onload = () => {
+
+    (function init(){
+        loadReviews();
+    
         // URL에서 영화 ID 가져오기
         const urlParams = new URLSearchParams(window.location.search);
         const movieId = urlParams.get('id');
@@ -93,4 +93,4 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
             .catch(error => {
                 console.error('Error fetching movie details:', error);
             });
-    }
+    })()
