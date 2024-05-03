@@ -1,4 +1,4 @@
-import { ApiFetch, ApiKey } from "./movie.js"
+import { ApiFetch } from "./movie.js"
 import { handleAddReviews, loadReviews } from "./review.js"
 
 const $reviewsForm = document.querySelector("#review-form");
@@ -11,13 +11,9 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
 // API 데이터 관련 
     // 영화 상세 데이터를 가져오는 함수
     const fetchMovieDetails = async (movieId) => {
-      const url = `/3/movie/${movieId}?language=en-US&api_key=${ApiKey}&append_to_response=credits`;
-      try {
+      const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits`;
           const movieDetails = await ApiFetch(url);
           return movieDetails;
-      } catch (error) {
-          console.error('Error fetching movie details:', error);
-      }
   }
     
     // 영화 상세 데이터를 가져와서 화면에 표시하는 함수
