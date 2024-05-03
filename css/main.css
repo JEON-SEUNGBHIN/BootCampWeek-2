@@ -1,8 +1,29 @@
-html { height: 100%; overflow:auto; }
-body { height: 100%; }
+html {
+    height: 100%;
+    overflow: auto;
+}
+
+body {
+    height: 100%;
+}
 
 #wrap {
     position: relative;
+}
+
+.inner_wrap2 {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.inner_wrap2 div {
+    width: calc(100% / 3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .inner_wrap {
@@ -96,7 +117,7 @@ main {
 
 
 #main_menus .inner_wrap button {
-    width: 50%; 
+    width: 50%;
     height: 70px;
     background-color: #fff;
     border: 0;
@@ -138,15 +159,16 @@ main {
     cursor: pointer;
 }
 
-#movie-list .movie:nth-child(4n){
+#movie-list .movie:nth-child(4n) {
     margin-right: 0;
 }
 
-#movie-list .movie > img {
+#movie-list .movie>img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 #movie-list .movie .hover p {
     word-wrap: break-word;
     display: -webkit-box;
@@ -191,5 +213,3 @@ footer {
     text-align: center;
     line-height: 50px;
 }
-
-

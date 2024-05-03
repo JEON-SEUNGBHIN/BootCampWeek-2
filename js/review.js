@@ -18,7 +18,10 @@ export const handleAddReviews = (e) => {
     }else {
         alert("감상평을 입력해주세요!");
     }
-    e.target[0].value = '';
+  } else {
+    alert("감상평을 입력해주세요!");
+  }
+  e.target[0].value = '';
 }
 
 export const loadReviews = () => {
@@ -32,10 +35,11 @@ export const loadReviews = () => {
       });
     }
   }
+}
 
 
 const saveReviews = () => {
-    localStorage.setItem(REVIEWS_LS, JSON.stringify(reviews));
+  localStorage.setItem(REVIEWS_LS, JSON.stringify(reviews));
 }
 
 const handelDeleteReview = (event) => {
@@ -78,8 +82,6 @@ const handleUpdateReview = (event) => {
     alert("비밀번호가 일치하지 않습니다.");
   }
 }
-
-
 
 const paintReview = (text, userId, password , movieId) => {
 
@@ -139,4 +141,3 @@ const paintReview = (text, userId, password , movieId) => {
     reviews.push(reviewObj);
     saveReviews();
   }
-  
