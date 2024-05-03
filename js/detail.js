@@ -1,9 +1,5 @@
 // detail.js
 
-const HEART_LS = "hearts";
-let hearts = JSON.parse(localStorage.getItem("hearts"));
-console.log(hearts);
-
 // API 키
 const ApiKey = "66f371611b5b7314fe42cbf067b62f1c";
 
@@ -92,10 +88,12 @@ const displayMovieDetails = (movieDetails) => {
         `;
 };
 
+// 찜 버튼 클릭 이벤트
+const HEART_LS = "hearts";
+let hearts = JSON.parse(localStorage.getItem("hearts"));
 function clickHeart(event) {
-  console.log(hearts);
+  const heartBtn = document.querySelector(".detail_heart_btn");
   const thisId = event.target.parentNode.id;
-  console.log(thisId);
 
   // 중복값 방지 조건문
   if (!hearts.includes(thisId.toString())) {
@@ -112,7 +110,6 @@ function clickHeart(event) {
     alert("찜한 목록에서 삭제되었습니다.");
     heartBtn.classList.remove("clicked");
   }
-  console.log(hearts);
 }
 
 // 페이지 로드 시 영화 상세 데이터 표시
@@ -126,10 +123,11 @@ window.onload = () => {
       // 영화 상세 데이터를 화면에 표시하기
       displayMovieDetails(movieDetails);
 
-      // 박솔 코드
       // 찜하기 기능
-      const heartBtn = document.querySelector(".detail_heart_btn");
-      heartBtn.addEventListener("click", clickHeart);
+
+      document
+        .querySelector(".detail_heart_btn")
+        .addEventListener("click", clickHeart);
     })
     .catch((error) => {
       console.error("Error fetching movie details:", error);

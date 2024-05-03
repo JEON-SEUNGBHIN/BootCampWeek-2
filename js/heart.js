@@ -1,31 +1,34 @@
-// import { movieListAPI, handleSearch } from "./movie.js";
-console.log("heart.js");
-const HEART_LS = "hearts";
-let hearts = [];
+import { ApiFetch, handleMovieItemClick } from "./movie.js";
+let hearts = JSON.parse(localStorage.getItem("hearts"));
 
-const heartBtn = document.querySelector(".detail_title");
-console.log(heartBtn);
-function clickHeart(event) {
-  // 중복값 방지 조건문
-  if (!hearts.includes(event.target.id.toString())) {
-    // 찜하지 않은 상태에서 클릭 시 등록 이벤트
-    hearts.push(event.target.id);
-    localStorage.setItem(HEART_LS, JSON.stringify(hearts));
-    alert("찜한 목록에 저장되었습니다.");
-    heartBtn.classList.add("clicked");
-  } else {
-    // 찜한 상태에서 다시 클릭 시 취소 이벤트
-    const thisIdx = hearts.indexOf(event.target.id);
-    hearts.splice(thisIdx, 1);
-    localStorage.setItem(HEART_LS, JSON.stringify(hearts));
-    alert("찜한 목록에서 삭제되었습니다.");
-    heartBtn.classList.remove("clicked");
-  }
-  console.log(hearts);
+function displayHeartedMovies(heartedList) {
+  const pickMovie = document.querySelector(".pick_movie");
+  heartedList.forEach((e) => {
+    const movieItem = document.createElement("div");
+    movieItem.classList.add("movie");
+    movieItem.dataset.movieId = e.id;
+    movieItem.innerHTML = `
+          <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
+          <div class="hover">
+              <h3 class="title bold">${e.title}</h3>
+              <p>${e.overview}</p>
+              <span>평점: ${e.vote_average}</span>
+          </div>
+      `;
+    movieItem.addEventListener("click", handleMovieItemClick);
+    pickMovie.appendChild(movieItem);
+  });
 }
-heartBtn.addEventListener("click", clickHeart);
 
-// const createHeart = async (movies) => {
-//   console.log(movies);
-// };
-// createHeart();
+const getMovies = async (hearts) => {
+  let heartedList = [];
+  for (let i = 0; i < hearts.length; i++) {
+    heartedList.push(
+      await ApiFetch(`/3/movie/${hearts[i]}?original_language="eu" `)
+    );
+  }
+  displayHeartedMovies(heartedList);
+};
+(function init() {
+  getMovies(hearts);
+})();
