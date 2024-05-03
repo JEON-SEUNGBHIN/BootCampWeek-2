@@ -12,7 +12,7 @@ export const handleSearch = (e) => {
     createMovieList(movieSearch);
 }
 
-export const movieListAPI = async (url = `/3/movie/popular?language=${currentLanguage}&page=1`) => {
+export const movieListAPI = async (url = `/3/movie/popular?page=1`) => {
     const api = await ApiFetch(url);
     movies = api.results;
     await createMovieList(movies);
@@ -38,9 +38,9 @@ export const ApiFetch = async (url) => {
             // Authorization: `Bearer ${ApiToken}`
         }
     };
-
+    console.log(url);
     try {
-        const response = await fetch(`https://api.themoviedb.org${url}${url.indexOf('?') !== -1 ? "&" : "?"}api_key=${ApiKey}`, options)
+        const response = await fetch(`https://api.themoviedb.org${url}${url.indexOf('?') !== -1 ? "&" : "?"}language=${currentLanguage}&api_key=${ApiKey}`, options)
         json = await response.json();
     } catch (error) {
         console.error(error);
