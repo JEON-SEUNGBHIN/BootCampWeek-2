@@ -48,7 +48,8 @@ const displayMovieDetails = (movieDetails) => {
                 <div class="detail_box1">
                     <h2 class="detail_title">${movieDetails.title}</h2>
                     <button class="detail_heart_btn" id="${movieDetails.id}">
-                        <img src="assets/icon/heart.svg"></img>
+                        <img class="heartEmpty" src="assets/icon/heartEmpty.svg"></img>
+                        <img class="heartRed" src="assets/icon/heartRed.svg"></img>
                     </button>
                 </div>
                 <div class="detail_box2">
@@ -86,6 +87,11 @@ const displayMovieDetails = (movieDetails) => {
                 <hr class="detail_box_hr">
             </div>
         `;
+
+  // 박솔 추가 이벤트
+  if (hearts.includes(movieDetails.id.toString())){
+    document.querySelector(".detail_heart_btn").classList.add("clicked");
+  }
 };
 
 // 찜 버튼 클릭 이벤트
