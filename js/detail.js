@@ -91,6 +91,9 @@ const displayMovieDetails = (movieDetails) => {
 
 // 찜 버튼 클릭 이벤트
 const HEART_LS = "hearts";
+if (localStorage.getItem("hearts") === null){
+  localStorage.setItem("hearts","[]");
+}
 let hearts = JSON.parse(localStorage.getItem("hearts"));
 function clickHeart(event) {
   const heartBtn = document.querySelector(".detail_heart_btn");

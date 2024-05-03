@@ -5,6 +5,11 @@ console.log('test')
 
 function displayHeartedMovies(heartedList) {
   const pickMovie = document.querySelector(".pick_movie");
+  const pickNothing = document.querySelector(".pick_nothing")
+  console.log(heartedList.length)
+  if (heartedList.length === 0){
+    pickNothing.style.display = 'block'
+  }
   heartedList.forEach((e) => {
     const movieItem = document.createElement("div");
     movieItem.classList.add("movie");

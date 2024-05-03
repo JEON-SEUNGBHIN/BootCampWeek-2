@@ -7,20 +7,20 @@ header {
 
 .pick_title {
   font-size: 35px;
-  margin: 50px;
+  margin: 40px;
   text-align: center;
   justify-content: center;
-  font-family: 'S-CoreDream-5Medium';
   font-weight: 550;
 }
 
 main {
-  text-align: center;
-  justify-content: center;
-  font-family: 'S-CoreDream-5Medium';
+  /* text-align: center; */
+  /* justify-content: center; */
   height: 100vh;
 }
-
+.inner_wrap {
+  margin-top: 50px;
+}
 .pick_view {
   font-size: 25px;
   margin-top: 25px;
@@ -31,17 +31,26 @@ main {
 
 .pick_nothing {
   width: auto;
+  text-align: center;
+  display: none;
 }
 
-img {
+.pick_img {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.pick_img img {
   width: 100px;
   height: auto;
-  margin-top: 13%;
+  margin-top: 200px;
+  margin-bottom: 5px;
 }
 
 .pick_detail {
   font-size: 20px;
-  margin-top: 8px;
+  margin: 8px auto 0;
 }
 
 .pick_movie {
