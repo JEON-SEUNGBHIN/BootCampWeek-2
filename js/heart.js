@@ -1,6 +1,8 @@
 import { ApiFetch, handleMovieItemClick } from "./movie.js";
 let hearts = JSON.parse(localStorage.getItem("hearts"));
 
+console.log('test')
+
 function displayHeartedMovies(heartedList) {
   const pickMovie = document.querySelector(".pick_movie");
   heartedList.forEach((e) => {
