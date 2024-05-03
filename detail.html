@@ -1,94 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상세페이지</title>
-  <link rel="stylesheet" href="./css/reset.css">
-  <link rel="stylesheet" href="./css/main.css">
-  <link rel="stylesheet" href="./css/detail.css">
-  <script type="module" src="./js/main.js" ></script>
-  <script type="module" src="./js/detail.js"></script>
-  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세페이지</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/detail.css">
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/detail.js"></script>
+    <script type="module" src="./js/language.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
+
 <body>
-  <div id="wrap">
-    <div id="pageUp">
-        <img src="./assets/icon/arrow.png" alt="">
-    </div>
-    <header>
-        <div class="inner_wrap">
-            <div id="logo">
-                <a href="#">Movie Search</a>
-            </div>
-            <form action="" method="post" id="search">
-                <input type="text" id="search_input" focus>
-                <button type="submit">
-                    <img src="./assets/icon/search.svg" alt="">
-                </button>
-            </form>
+    <div id="wrap">
+        <div id="pageUp">
+            <img src="./assets/icon/arrow.png" alt="">
         </div>
-    </header>
-    <main>
-      <div class="detail_main">
-          <!-- <div class="img_container">
-            
-            <div class="detail_img">
-              <img src='https://i.namu.wiki/i/OHj59ojnhpp9PdEkNrBxENXjGFj4zUbWTCQwwmCV74LfsIabB8WvuCeVRcnGIGpnpgoN60opfYgIpvEsUfGnHQ.webp' alt="API에서 가져온 이미지">
-            </div>
-          </div>
-          <div class="content_container">
-            <div class="detail_box1">
-              <h2 class="detail_title">듄: 파트 2</h2>
-              <button class="detail_heart_btn">
-                <i class="fa fa-heart" id="heart_btn_true"></i>
-              </button>
-            </div>
-            <div class="detail_box2">
-              <div class="detail_scores">
-                <i class="fa fa-star" id="scores"></i>
-                <h5>8.5</h5>
-              </div>
-              <hr class="detail_box1_hr">
-              <h5 class="detail_year">2024</h5>
-              <hr class="detail_box1_hr">
-              <h5 class="detail_runtime">165분</h5>
-              <hr class="detail_box1_hr">
-              <h5 class="detail_certification">12세 관람가</h5>
-              <hr class="detail_box1_hr">
-              <h5 class="detail_genres">액션</h5>
-            </div>
-            <hr class="detail_box_hr">
-            <div class="detail_box3">
-              <div class="detail_director">
-                <h4 class="director_title">감독</h4>
-                <h5 class="director_name">드니 빌뇌브</h5>
-              </div>
-              <div class="detail_actors">
-                <h4 class="actors_title">출연</h4>
-                <h5 class="actors_name">
-                  티모시 샬라메, 젠데이아 콜먼, 레베카 퍼거슨, 조슈 브롤린, 오스틴 버틀러, 플로렌스 퓨, 데이브 바티스타, 크리스토퍼 월켄, 스티븐 헨더슨, 레아 세이두</h5>
-              </div>
-              <div class="detail_contents">
-                <h4 class="plot_title">소개</h4>
-                <h5 class="detail_plot">황제의 모략으로 멸문한 가문의 유일한 후계자 폴.(티모시 샬라메) 어머니 레이디 제시카(레베카 퍼거슨)와 간신히 목숨만 부지한 채 사막으로 도망친다. 그곳에서 만난 반란군들과 숨어 지내다 그들과 함께 황제의 모든 것을 파괴할 전투를 준비한다. 한편 반란군들의 기세가 높아질수록 불안해진 황제와 귀족 가문은 잔혹한 암살자 페이드 로타(오스틴 버틀러)를 보내 반란군을 몰살하려 하는데… 운명의 반격이 시작된다!</h5>
-              </div>
-            </div>
-            <hr class="detail_box_hr">
-          </div>  -->
-        </div>
-        <div class="reviews inner_wrap">
-            <form action="" id="review-form">
-                <p>감상평</p>
-                <div class="review-input">
-                    <input type="text" id="review" placeholder="감상평을 적어주세요!">
-                    <button type="submit">등록</button>
+        <header>
+            <div id="top_of_header">
+                <div class="inner_wrap2">
+                    <div></div>
+                    <div id="logo">
+                        <a href="#">Movie Search</a>
+                    </div>
+
+                    <div>
+                        <button id="lang_change_btn" data-lang="ko"><span>EN</span> / <span>KR</span></button>
+                    </div>
                 </div>
-            </form>
-            <ul id="review-list">
-            </ul>
-        </div>
-    </div>
-    </main>
+                <form action="" method="post" id="search">
+                    <input type="text" id="search_input" focus>
+                    <button type="submit">
+                        <img src="./assets/icon/search.svg" alt="">
+                    </button>
+                </form>
+            </div>
+        </header>
+        <main>
+            <div class="detail_main inner_wrap">
+            </div>
+            <div class="reviews inner_wrap">
+
+                <form action="" id="review-form">
+                    <p>감상평</p>
+                    <div class="review-input">
+                        <input type="text" id="review" placeholder="감상평을 적어주세요!">
+                        <button type="submit">등록</button>
+                    </div>
+                </form>
+                <ul id="review-list">
+                </ul>
+            </div>
+        </main>
+
 </body>
+
 </html>
