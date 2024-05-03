@@ -14,17 +14,15 @@ header {
 }
 
 main {
-  /* text-align: center; */
-  /* justify-content: center; */
   height: 100vh;
 }
 .inner_wrap {
   margin-top: 50px;
 }
 .pick_view {
+  width: fit-content;
   font-size: 25px;
-  margin-top: 25px;
-  display: inline-block;
+  margin: 25px auto 0;
   border-bottom: 4px solid #f02459; /* 밑줄 설정 */
   padding-bottom: 5px;
 }
