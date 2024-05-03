@@ -4,7 +4,6 @@ import { handleAddReviews, loadReviews } from "./review.js"
 const $reviewsForm = document.querySelector("#review-form");
 $reviewsForm.addEventListener('submit', handleAddReviews);
 
-
 (function init(){
     loadReviews();
 })()
@@ -25,21 +24,24 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
     const displayMovieDetails = (movieDetails) => {
         // detail_main 요소 선택
         const detailMain = document.querySelector('.detail_main');
+      
+        // 영화 감독 정보 추출
         const directors = movieDetails.credits.crew.filter(member => member.job === "Director");
         const directorNames = directors.map(director => director.name).join(', ');
     
         // 출연 배우 정보 추출
         const actors = movieDetails.credits.cast.slice(0, 10);
-      const actorNames = actors.map(actor => actor.name).join(', ');
+        const actorNames = actors.map(actor => actor.name).join(', ');
 
         // detail_main 요소의 innerHTML을 채워 넣음
-        detailMain.innerHTML = `
+      detailMain.innerHTML = `
+        <div class="detail_container">
             <div class="img_container">
               <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
                   alt="${movieDetails.title}" class="detail_img">
                 <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
                     alt="${movieDetails.title}" class="detail_main_img">
-            </div>
+                </div>
             <div class="content_container">
                 <div class="detail_box1">
                     <h2 class="detail_title">${movieDetails.title}</h2>
@@ -76,7 +78,8 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
                 </div>
                 <hr class="detail_box3_hr">
             </div>
-        `;
+        </div>
+      `;
     }
     
     // 페이지 로드 시 영화 상세 데이터 표시
