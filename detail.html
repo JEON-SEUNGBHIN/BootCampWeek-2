@@ -22,21 +22,24 @@
         <header>
             <div id="top_of_header">
                 <div class="inner_wrap2">
-                    <div></div>
                     <div id="logo">
                         <a href="./index.html">Movie Search</a>
                     </div>
-
+                    <form action="" method="post" id="search">
+                        <input type="text" id="search_input" focus>
+                        <button type="submit">
+                            <img src="./assets/icon/search.svg" alt="">
+                        </button>
+                    </form>
                     <div>
-                        <button id="lang_change_btn" data-lang="ko"><span>EN</span> / <span>KR</span></button>
+                        <img src="assets/icon/lang.png" id="lang_change_btn" alt="한영변환">
+                        <a href="찜목록페이지">
+                            <img src="assets/icon/heartlist.png" id="heartlink" alt="찜목록">
+                        </a>
                     </div>
+
                 </div>
-                <form action="" method="post" id="search">
-                    <input type="text" id="search_input" focus>
-                    <button type="submit">
-                        <img src="./assets/icon/search.svg" alt="">
-                    </button>
-                </form>
+               
             </div>
         </header>
         <main>

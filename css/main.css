@@ -15,14 +15,12 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
     align-items: center; /* 수정된 부분 */
 }
 
-.inner_wrap2 div {
-    width: calc(100% / 3);
+.inner_wrap2 > div {
     display: flex;
-
+    gap: 10px;
 }
 
 .inner_wrap {
@@ -59,16 +57,29 @@ main {
 
 
 #logo a {
-    display: block;
+    display: inline-block; /* 인라인 블록으로 설정하여 텍스트를 중앙 정렬 */
     text-align: center;
     font-size: 2rem;
     line-height: 50px;
-    margin: 0 auto;
+
 }
 
 #logo a:hover {
  color: #f02459; 
 }
+
+#lang_change_btn,
+#heartlink {
+    margin-left: 10px; /* 이미지들 사이의 간격 설정 */
+}
+
+#lang_change_btn,
+#heartlink,
+#pageUp img {
+    width: 30px;
+    height: 30px;
+}
+
 
 #search {
     display: flex;
@@ -219,11 +230,12 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 #footer {
     margin: 20px;
-    margin-left: 200px;
 }
 
 #footer a {
@@ -239,7 +251,4 @@ footer {
 img {
     width: 50px;
     height: auto;
-    margin-right: 100px;
 }
-
-
