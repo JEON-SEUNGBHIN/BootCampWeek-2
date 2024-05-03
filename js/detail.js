@@ -1,4 +1,3 @@
-
 import { ApiFetch } from "./movie.js"
 import { handleAddReviews, loadReviews } from "./review.js"
 
@@ -13,8 +12,8 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
     // 영화 상세 데이터를 가져오는 함수
     const fetchMovieDetails = async (movieId) => {
       const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits`;
-          const movieDetails = await ApiFetch(url);
-          return movieDetails;
+      const movieDetails = await ApiFetch(url);
+        return movieDetails;
   }
     
     // 영화 상세 데이터를 가져와서 화면에 표시하는 함수
@@ -29,6 +28,7 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
         // 출연 배우 정보 추출
         const actors = movieDetails.credits.cast.slice(0, 10);
         const actorNames = actors.map(actor => actor.name).join(', ');
+      
 
         // detail_main 요소의 innerHTML을 채워 넣음
       detailMain.innerHTML = `
@@ -55,6 +55,8 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
                     <h5 class="detail_year">${movieDetails.release_date.substring(0, 4)}</h5>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
+                    <hr class="detail_box1_hr">
+                    <h5 class="detail_certification">${movieDetails.runtime}</h5>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_genres">${movieDetails.genres.map(genre => genre.name).join(', ')}</h5>
                 </div>
