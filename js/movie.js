@@ -18,20 +18,14 @@ export const movieListAPI = async (url = `/3/movie/popular?language=${currentLan
     await createMovieList(movies);
 
     // HTML 내부 언어 변경 기능
-    const areaLogo = document.getElementById("logo").querySelector("a");
     const areaPopularBtn = document.getElementById("popular");
     const areaTopratedBtn = document.getElementById("top_rated");
-    const areaFooter = document.getElementById("footer");
     if (currentLanguage === "en-US") {
-        areaLogo.textContent = "Movie Search";
         areaPopularBtn.textContent = "Popular";
         areaTopratedBtn.textContent = "Top Reated";
-        areaFooter.textContent = "Copyright © Lee JunHyeok All rights reserved."
     } else if (currentLanguage === "ko-KR") {
-        areaLogo.textContent = "영화 검색기";
         areaPopularBtn.textContent = "인기순";
         areaTopratedBtn.textContent = "높은 평점순";
-        areaFooter.textContent = "Copyright © 이준혁 All rights reserved."
     }
 }
 
