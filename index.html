@@ -1,28 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/main.css" />
-    <script type="module" src="./js/main.js"></script>
-  </head>
-  <body>
-    <div id="wrap">
-      <div id="pageUp">
-        4
-        <img src="./assets/icon/arrow.png" alt="" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <script type="module" src="./js/main.js"></script>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="pageUp">
+      4
+      <img src="./assets/icon/arrow.png" alt="" />
+    </div>
+    <header>
+      <div class="inner_wrap">
+        <div id="logo">
+          <a href="#">Movie Search</a>
+        </div>
+        <form action="" method="post" id="search">
+          <input type="text" id="search_input" focus />
+          <button type="submit">
+            <img src="./assets/icon/search.svg" alt="" />
+          </button>
+        </form>
       </div>
       <header>
-        <div class="inner_wrap">
-          <div id="logo">
-            <a href="#">Movie Search</a>
+        <div id="top_of_header">
+          <div class="inner_wrap2">
+            <div></div>
+            <div id="logo">
+              <a href="#">Movie Search</a>
+            </div>
+
+            <div>
+              <button id="lang_change_btn" data-lang="ko"><span>EN</span> / <span>KR</span></button>
+            </div>
           </div>
           <form action="" method="post" id="search">
-            <input type="text" id="search_input" focus />
+            <input type="text" id="search_input" focus>
             <button type="submit">
-              <img src="./assets/icon/search.svg" alt="" />
+              <img src="./assets/icon/search.svg" alt="">
             </button>
           </form>
         </div>
@@ -35,12 +56,16 @@
           </div>
         </div>
         <div class="inner_wrap">
-          <div id="movie-list"></div>
+          <div id="movie-list">
+
+          </div>
         </div>
       </main>
       <footer>
-        <p>Copyright © 이준혁 All rights reserved.</p>
+        <p id="footer">Copyright © 이준혁 All rights reserved.</p>
       </footer>
-    </div>
-  </body>
+  </div>
+  <script type="module" src="./js/language.js"></script>
+</body>
+
 </html>
