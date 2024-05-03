@@ -7,8 +7,6 @@ const $reviewsForm = document.querySelector("#review-form");
 $reviewsForm.addEventListener('submit', handleAddReviews);
 
 
-
-
 // detail.js
 
 // API 데이터 관련 
