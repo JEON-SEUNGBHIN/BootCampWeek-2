@@ -1,38 +1,34 @@
 import { ApiFetch } from "./movie.js"
 import { handleAddReviews, loadReviews } from "./review.js"
 
+
 const $reviewsForm = document.querySelector("#review-form");
 $reviewsForm.addEventListener('submit', handleAddReviews);
 
-(function init(){
-    loadReviews();
-})()
+// detail.js
 
 // API 데이터 관련 
     // 영화 상세 데이터를 가져오는 함수
     const fetchMovieDetails = async (movieId) => {
-      const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits`;
-      const movieDetails = await ApiFetch(url);
-        return movieDetails;
-  }
-    
-    // 영화 상세 데이터를 가져와서 화면에 표시하는 함수
-    const displayMovieDetails = (movieDetails) => {
-        // detail_main 요소 선택
-        const detailMain = document.querySelector('.detail_main');
-      
-        // 영화 감독 정보 추출
-        const directors = movieDetails.credits.crew.filter(member => member.job === "Director");
-        const directorNames = directors.map(director => director.name).join(', ');
-    
-        // 출연 배우 정보 추출
-        const actors = movieDetails.credits.cast.slice(0, 10);
-        const actorNames = actors.map(actor => actor.name).join(', ');
-      
+        const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits`;
+            const movieDetails = await ApiFetch(url);
+            return movieDetails;
+    }
 
-        // detail_main 요소의 innerHTML을 채워 넣음
-      detailMain.innerHTML = `
-        <div class="detail_container">
+
+// 영화 상세 데이터를 가져와서 화면에 표시하는 함수
+const displayMovieDetails = (movieDetails) => {
+    // detail_main 요소 선택
+    const detailMain = document.querySelector('.detail_main');
+    const directors = movieDetails.credits.crew.filter(member => member.job === "Director");
+    const directorNames = directors.map(director => director.name).join(', ');
+
+    // 출연 배우 정보 추출
+    const actors = movieDetails.credits.cast.slice(0, 10);
+    const actorNames = actors.map(actor => actor.name).join(', ');
+
+    // detail_main 요소의 innerHTML을 채워 넣음
+    detailMain.innerHTML = `
             <div class="img_container">
               <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
                   alt="${movieDetails.title}" class="detail_img">
@@ -56,8 +52,6 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
                     <hr class="detail_box1_hr">
                     <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
                     <hr class="detail_box1_hr">
-                    <h5 class="detail_certification">${movieDetails.runtime}</h5>
-                    <hr class="detail_box1_hr">
                     <h5 class="detail_genres">${movieDetails.genres.map(genre => genre.name).join(', ')}</h5>
                 </div>
                 <hr class="detail_box3_hr">
@@ -77,22 +71,23 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
                 </div>
                 <hr class="detail_box3_hr">
             </div>
-        </div>
-      `;
-    }
-    
-    // 페이지 로드 시 영화 상세 데이터 표시
-    window.onload = () => {
-        // URL에서 영화 ID 가져오기
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get('id');
-        // TMDB API를 사용하여 영화 상세 데이터 가져오기
-        fetchMovieDetails(movieId)
-            .then(movieDetails => {
-                // 영화 상세 데이터를 화면에 표시하기
-                displayMovieDetails(movieDetails);
-            })
-            .catch(error => {
-                console.error('Error fetching movie details:', error);
-            });
-    }
+        `;
+}
+
+
+(function init() {
+    loadReviews();
+
+    // URL에서 영화 ID 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('id');
+    // TMDB API를 사용하여 영화 상세 데이터 가져오기
+    fetchMovieDetails(movieId)
+        .then(movieDetails => {
+            // 영화 상세 데이터를 화면에 표시하기
+            displayMovieDetails(movieDetails);
+        })
+        .catch(error => {
+            console.error('Error fetching movie details:', error);
+        });
+})()
