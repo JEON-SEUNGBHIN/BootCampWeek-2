@@ -1,3 +1,5 @@
+
+import { ApiFetch } from "./movie.js"
 import { handleAddReviews, loadReviews } from "./review.js"
 import { currentLanguage } from "./language.js"
 
@@ -47,7 +49,7 @@ const displayMovieDetails = (movieDetails) => {
                   alt="${movieDetails.title}" class="detail_img">
                 <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
                     alt="${movieDetails.title}" class="detail_main_img">
-            </div>
+                </div>
             <div class="content_container">
                 <div class="detail_box1">
                     <h2 class="detail_title">${movieDetails.title}</h2>

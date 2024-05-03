@@ -35,7 +35,7 @@ export const movieListAPI = async (url = `/3/movie/popular?language=${currentLan
     }
 }
 
-const ApiFetch = async (url) => {
+export const ApiFetch = async (url) => {
     let json;
     const options = {
         method: 'GET',

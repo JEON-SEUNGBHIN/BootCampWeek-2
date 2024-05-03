@@ -38,6 +38,7 @@ body {
     right: 10vw;
     z-index: 100;
     cursor: pointer;
+    border-radius: 65px;
 }
 
 #pageUp img {
