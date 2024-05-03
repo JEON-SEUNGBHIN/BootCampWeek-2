@@ -18,9 +18,7 @@ export const handleAddReviews = (e) => {
     }else {
         alert("감상평을 입력해주세요!");
     }
-  } else {
-    alert("감상평을 입력해주세요!");
-  }
+
   e.target[0].value = '';
 }
 
@@ -34,7 +32,7 @@ export const loadReviews = () => {
         paintReview(review.text, review.userId, review.password, review.movieId );
       });
     }
-  }
+  
 }
 
 

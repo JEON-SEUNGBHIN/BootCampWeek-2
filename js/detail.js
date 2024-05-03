@@ -1,35 +1,24 @@
 
 import { ApiFetch } from "./movie.js"
 import { handleAddReviews, loadReviews } from "./review.js"
-import { currentLanguage } from "./language.js"
+
 
 const $reviewsForm = document.querySelector("#review-form");
 $reviewsForm.addEventListener('submit', handleAddReviews);
 
 
-(function init() {
-    loadReviews();
-})()
+
 
 // detail.js
 
-// API 키
-const ApiKey = '66f371611b5b7314fe42cbf067b62f1c';
-
-// 영화 상세 데이터를 가져오는 함수
-const fetchMovieDetails = async (movieId) => {
-    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${ApiKey}&language=${currentLanguage}&append_to_response=credits`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Failed to fetch movie details');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching movie details:', error);
+// API 데이터 관련 
+    // 영화 상세 데이터를 가져오는 함수
+    const fetchMovieDetails = async (movieId) => {
+        const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits`;
+            const movieDetails = await ApiFetch(url);
+            return movieDetails;
     }
-}
+
 
 // 영화 상세 데이터를 가져와서 화면에 표시하는 함수
 const displayMovieDetails = (movieDetails) => {
@@ -124,24 +113,21 @@ function clickHeart(event) {
   }
 }
 
-// 페이지 로드 시 영화 상세 데이터 표시
-window.onload = () => {
-  // URL에서 영화 ID 가져오기
-  const urlParams = new URLSearchParams(window.location.search);
-  const movieId = urlParams.get("id");
-  // TMDB API를 사용하여 영화 상세 데이터 가져오기
-  fetchMovieDetails(movieId)
-    .then((movieDetails) => {
-      // 영화 상세 데이터를 화면에 표시하기
-      displayMovieDetails(movieDetails);
 
-      // 찜하기 기능
+(function init() {
+    loadReviews();
 
-      document
-        .querySelector(".detail_heart_btn")
-        .addEventListener("click", clickHeart);
-    })
-    .catch((error) => {
-      console.error("Error fetching movie details:", error);
-    });
-};
+    // URL에서 영화 ID 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('id');
+    // TMDB API를 사용하여 영화 상세 데이터 가져오기
+    fetchMovieDetails(movieId)
+        .then(movieDetails => {
+            // 영화 상세 데이터를 화면에 표시하기
+            displayMovieDetails(movieDetails);
+            document.querySelector(".detail_heart_btn").addEventListener("click", clickHeart);
+        })
+        .catch(error => {
+            console.error('Error fetching movie details:', error);
+        });
+})()
