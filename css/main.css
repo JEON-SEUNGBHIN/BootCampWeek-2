@@ -51,6 +51,24 @@ header {
     border-bottom: 1px solid #ccc;
 }
 
+@media screen and (max-width: 700px) {
+    .inner_wrap2 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #search {
+        margin-top: 10px;
+    }
+
+    #search_input {
+        width: 100%;
+    }
+}
+
+
+
+
 main {
     min-height: calc(100vh - 275px);
 }
@@ -234,8 +252,24 @@ footer {
     margin: 0 auto;
 }
 
-#footer {
-    margin: 20px;
+@media screen and (max-width: 700px) {
+    footer .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #footer {
+        margin: 20;
+    }
+
+    .footer-left {
+        text-align: center;
+    }
+
+    .footer-left a {
+        display: block;
+        margin: 10px 0;
+    }
 }
 
 #footer a {
@@ -248,16 +282,10 @@ footer {
     color: #f02459; 
 }
 
+
+
 img {
     width: 50px;
     height: auto;
 }
 
-/* 페이지 너비가 600px 이하일 때 헤더와 푸터를 세로로 배치 */
-@media only screen and (max-width: 600px) {
-    header, footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
