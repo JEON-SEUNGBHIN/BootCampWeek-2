@@ -1,4 +1,4 @@
-import { ApiFetch, movieListAPI } from "./movie.js";
+import { movieListAPI, createMovieList } from "./movie.js";
 
 // 언어변경 버튼 선택자 지정
 const changeLangBtn = document.getElementById('lang_change_btn');
@@ -11,15 +11,8 @@ if (changeLangBtn !== null) {
         localStorage.setItem('currentLanguage', currentLanguage); // 변경시킨 언어를 로컬 스토리지에 재할당함
         console.log(currentLanguage);  // 버튼 눌러서 변경된 언어 콘솔 출력
 
-        if (currentPage === "index.html") {
-            await movieListAPI(`/3/movie/popular?page=1&language=${currentLanguage}&api_key=21ccf5793f9e51cfba0198fa23b3d541`);
-            // await ApiFetch(`/3/movie/popular?page=1&language=${currentLanguage}&api_key=21ccf5793f9e51cfba0198fa23b3d541`);
-            // 변경된 국가 코드로 API URL 수정 후 movieListAPI 함수 호출 (카드 다시 뿌리기)}
-        } else {
-            await ApiFetch(`/3/movie/${movieId}?append_to_response=credits&language=${currentLanguage}`);
-            // detail.html에서는 해당 페이지의 movieId가 필요하므로 여기에 작성된 로직은 적절하지 않습니다.
-
-        }
+        await movieListAPI(`/3/movie/popular?`);
+        // createMovieList(movieList);
     }
     )
 }

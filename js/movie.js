@@ -53,8 +53,9 @@ export const handleMovieItemClick = (e) => {
     window.location.href = `detail.html?id=${movieId}`; // detail.html로 이동하면서 영화 ID를 쿼리 파라미터로 전달
 }
 
-const createMovieList = async (movies) => {
+export const createMovieList = async (movies) => {
     $movieList.textContent = '';
+    console.log(movies);
     movies.forEach((e) => {
         if (!e.overview) { // overview 값이 없을 때 순회 제외처리
             return;
