@@ -9,12 +9,12 @@ if (changeLangBtn !== null) {
     changeLangBtn.addEventListener('click', async () => {
         currentLanguage = currentLanguage === 'en-US' ? 'ko-KR' : 'en-US'; // 버튼 클릭 시 현재 언어와 반대로 값을 재할당함
         const viewedMenu = localStorage.getItem('isViewedNow');
-        console.log(viewedMenu);
 
         localStorage.setItem('currentLanguage', currentLanguage); // 변경시킨 언어를 로컬 스토리지에 재할당함
-        console.log(currentLanguage);  // 버튼 눌러서 변경된 언어 콘솔 출력
 
-        await movieListAPI(`/3/movie/${viewedMenu}?page=1`);
+        const url = `/3/movie/${viewedMenu}?page=1`;
+        await movieListAPI(url);
+        // await movieListAPI(`/3/movie/${viewedMenu}?page=1`);
         // createMovieList(movieList);
     }
     )

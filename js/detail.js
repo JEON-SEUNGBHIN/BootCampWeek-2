@@ -1,5 +1,6 @@
 import { ApiFetch } from "./movie.js"
 import { handleAddReviews, loadReviews } from "./review.js"
+import { currentLanguage } from "./language.js";
 
 
 const $reviewsForm = document.querySelector("#review-form");
@@ -11,7 +12,7 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
 // API 데이터 관련 
 // 영화 상세 데이터를 가져오는 함수
 const fetchMovieDetails = async (movieId) => {
-    const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits,release_dates`;
+    const url = `/3/movie/${movieId}?&append_to_response=credits,release_dates`;
     const movieDetails = await ApiFetch(url);
     const certificationData = await getMovieCertifications(movieId); // 영화 등급 정보 가져오기
     movieDetails.certification = certificationData.certification; // 영화 상세 정보에 등급 정보 추가
