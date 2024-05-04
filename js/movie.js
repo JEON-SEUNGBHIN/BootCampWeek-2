@@ -1,4 +1,5 @@
 import { currentLanguage } from "./language.js"
+import { isViewedNow } from "./event.js";
 
 const ApiKey = '21ccf5793f9e51cfba0198fa23b3d541';
 const ApiToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMWNjZjU3OTNmOWU1MWNmYmEwMTk4ZmEyM2IzZDU0MSIsInN1YiI6IjY2MmEwZDFkYmYzMWYyMDA5YWUzMzAzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sNlesGPpMfB6Nt3ZqEFMSIwcE88KWjPts2Waw_I2qp8';
@@ -12,7 +13,7 @@ export const handleSearch = (e) => {
     createMovieList(movieSearch);
 }
 
-export const movieListAPI = async (url = `/3/movie/popular?page=1`) => {
+export const movieListAPI = async (url = `/3/movie/${isViewedNow}?page=1`) => {
     const api = await ApiFetch(url);
     movies = api.results;
     await createMovieList(movies);
@@ -22,7 +23,7 @@ export const movieListAPI = async (url = `/3/movie/popular?page=1`) => {
     const areaTopratedBtn = document.getElementById("top_rated");
     if (currentLanguage === "en-US") {
         areaPopularBtn.textContent = "Popular";
-        areaTopratedBtn.textContent = "Top Reated";
+        areaTopratedBtn.textContent = "Top Rated";
     } else if (currentLanguage === "ko-KR") {
         areaPopularBtn.textContent = "인기순";
         areaTopratedBtn.textContent = "높은 평점순";
@@ -55,7 +56,15 @@ export const handleMovieItemClick = (e) => {
 
 export const createMovieList = async (movies) => {
     $movieList.textContent = '';
-    console.log(movies);
+
+    if (!movies || movies.length === 0) {
+        // movies가 없거나 비어 있을 때 처리
+        const noResultsMessage = document.createElement('p');
+        noResultsMessage.textContent = 'No movies found.';
+        $movieList.appendChild(noResultsMessage);
+        return;
+    }
+
     movies.forEach((e) => {
         if (!e.overview) { // overview 값이 없을 때 순회 제외처리
             return;
