@@ -38,7 +38,7 @@ export const ApiFetch = async (url) => {
             // Authorization: `Bearer ${ApiToken}`
         }
     };
-    console.log(url);
+
     try {
         const response = await fetch(`https://api.themoviedb.org${url}${url.indexOf('?') !== -1 ? "&" : "?"}language=${currentLanguage}&api_key=${ApiKey}`, options)
         json = await response.json();
