@@ -252,3 +252,12 @@ img {
     width: 50px;
     height: auto;
 }
+
+/* 페이지 너비가 600px 이하일 때 헤더와 푸터를 세로로 배치 */
+@media only screen and (max-width: 600px) {
+    header, footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
