@@ -11,12 +11,24 @@ $reviewsForm.addEventListener('submit', handleAddReviews);
 // API 데이터 관련 
 // 영화 상세 데이터를 가져오는 함수
 const fetchMovieDetails = async (movieId) => {
-    const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits,release_dates`;
-    const movieDetails = await ApiFetch(url);
-    const certificationData = await getMovieCertifications(movieId); // 영화 등급 정보 가져오기
-    movieDetails.certification = certificationData.certification; // 영화 상세 정보에 등급 정보 추가
-    return movieDetails;
+  const url = `/3/movie/${movieId}?language=en-US&append_to_response=credits,release_dates`;
+  try {
+      const movieDetails = await ApiFetch(url);
+      let certificationData = { certification: 'No Information' };
+          
+      // 영화 등급 정보가 존재하는 경우에만 가져옴
+      if (movieDetails.certification !== undefined) {
+          certificationData = await getMovieCertifications(movieId);
+          // 관람 등급 정보를 movieDetails 객체에 할당
+          movieDetails.certification = certificationData.certification;
+      }
+      
+      return movieDetails;
+  } catch (error) {
+      console.error('Error fetching movie details:', error);
+  }
 }
+
 
 // 영화 관람 등급 정보 가져오는 함수
 const getMovieCertifications = async (movieId) => {
@@ -34,11 +46,10 @@ const getMovieCertifications = async (movieId) => {
                   break; // 미국 정보를 찾으면 반복문 종료
               }
           }
-      } else {
-          certificationInf = '정보 없음'; // null값인 경우 '정보 없음'
-      }
-
+    } 
+    if (certificationInf !== 'certification') {
       return { certification: certificationInf };
+    }
   } catch (error) {
       console.error('Error fetching movie certifications:', error);
   }
@@ -49,14 +60,21 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
     // detail_main 요소 선택
   const detailMain = document.querySelector('.detail_main');
   
-    //영화 감독 정보 추출
-    const directors = movieDetails.credits.crew.filter(member => member.job === "Director");
-    const directorNames = directors.map(director => director.name).join(', ');
+  //영화 감독 정보 추출
+  const directors = movieDetails.credits.crew.filter(member => member.job === "Director");
+  const directorNames = directors.map(director => director.name).join(', ');
 
-    // 출연 배우 정보 추출
-    const actors = movieDetails.credits.cast.slice(0, 10);
-    const actorNames = actors.map(actor => actor.name).join(', ');
-      
+  // 출연 배우 정보 추출
+  const actors = movieDetails.credits.cast.slice(0, 10);
+  const actorNames = actors.map(actor => actor.name).join(', ');
+
+  // 영화 관람 등급이 존재하는 경우에만 해당 정보를 출력
+  const certificationHTML = movieCertifications && movieCertifications.certification !== 'No Information' ?
+  `
+  <hr class="detail_box1_hr">
+  <h5 class="detail_certifications">${movieCertifications.certification}</h5>
+  ` : '';
+  
     // detail_main 요소의 innerHTML을 채워 넣음
     detailMain.innerHTML = `
             <div class="img_container">
@@ -81,8 +99,7 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                     <h5 class="detail_year">${movieDetails.release_date.substring(0, 4)}</h5>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
-                    <hr class="detail_box1_hr">
-                    <h5 class="detail_certifications">${movieDetails.certification}</h5>
+                    ${certificationHTML}
                     <hr class="detail_box1_hr">
                     <h5 class="detail_genres">${movieDetails.genres.map(genre => genre.name).join(', ')}</h5>
                 </div>
@@ -104,6 +121,11 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                 <hr class="detail_box3_hr">
             </div>
         `;
+   // 영화 관람 등급이 없는 경우 해당 HTML 요소를 숨김
+  if (!movieCertifications || movieCertifications.certification === 'No Information') {
+    const certificationElement = detailMain.querySelector('.detail_certifications');
+    certificationElement.style.display = 'none';
+  }
 }
 
 (function init() {
@@ -115,11 +137,12 @@ const movieId = urlParams.get('id');
 
 // TMDB API를 사용하여 영화 상세 데이터 가져오기
 Promise.all([
-  fetchMovieDetails(movieId)
+  fetchMovieDetails(movieId),
+  getMovieCertifications(movieId) // 관람 등급 정보도 가져오기
 ])
-.then(([movieDetails]) => {
+.then(([movieDetails, movieCertifications]) => {
   // 영화 상세 데이터를 화면에 표시하기
-  displayMovieDetails(movieDetails); // movieCertifications가 필요 없으므로 제거
+  displayMovieDetails(movieDetails, movieCertifications); 
 })
 .catch(error => {
   console.error('Error fetching movie details:', error);
