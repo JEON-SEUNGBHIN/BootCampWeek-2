@@ -170,6 +170,7 @@
   background-color: #f02459;
   text-align: center;
   border: 1px solid rgba(0,0,0,.1);
+  cursor: pointer;
 }
 
 #review-list .review {
@@ -248,6 +249,7 @@
   outline: none;
   margin: 0 auto;
   margin-bottom: 20px;
+  display: none;
 }
 .modal-box textarea {
   width: 80%;
@@ -256,9 +258,10 @@
   margin: 0 auto;
   margin-bottom: 20px;
   resize: none;
+  display: none;
 }
 
-.modal-ok {
+#modal-ok {
   width: 80%;
   color: #fff;
   background-color: #333;
@@ -280,4 +283,15 @@
   margin: 10px 0;
   margin-left: 92%;
   outline: none;
+}
+
+#modal .modal-box #modal-pw {
+  display: block;
+}
+
+#modal.add .modal-box #modal-id{
+  display: block;
+}
+#modal.update .modal-box #modal-text{
+  display: block;
 }

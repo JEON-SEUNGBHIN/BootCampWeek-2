@@ -2,31 +2,31 @@ let reviews = [];
 const REVIEWS_LS = "reviews";
 const $reviewList = document.querySelector("#review-list");
 const $modal = document.querySelector("#modal");
+const $id = document.querySelector("#modal-id");
+const $pw = document.querySelector("#modal-pw");
+const $text = document.querySelector("#modal-text");
+const $review = document.querySelector("#review");
 const urlParams = new URLSearchParams(window.location.search);
 const nowMovieId = urlParams.get('id');
 
 export const handleClose = (e) => {
-  $modal.classList.add('hidden');
+  $modal.classList.replace( $modal.className ,'hidden');
+  document.body.style.overflow = 'auto';
+  $review.value = "";
+  $id.value = "";
+  $pw.value = "";
+  $text.value = "";
 }
 
 export const handleAddReviews = (e) => {
     e.preventDefault();
-    // document.body.style.overflow = 'hidden';
     
-    console.log(e.target[0].value);
     if(e.target[0].value){
-        let id = prompt("닉네임");
-        if(id){
-            let pw = prompt("비밀번호");
-            if(pw){
-                paintReview(e.target[0].value, id, pw, nowMovieId);
-            }
-        }
+      modal("add");
     }else {
-        alert("감상평을 입력해주세요!");
+      alert("감상평을 입력해주세요!");
     }
 
-  e.target[0].value = '';
 }
 
 export const loadReviews = () => {
@@ -42,6 +42,58 @@ export const loadReviews = () => {
   
 }
 
+export const modalOk = (e) => {
+  const name = e.target.parentNode.parentNode.className;
+  console.log(name);
+  const id = e.target.parentNode.parentNode.dataset.id;
+  if(name == 'add'){
+    console.log("awd");
+    if($pw.value !== ""){
+      console.log($review);
+      paintReview($review.value , $id.value, $pw.value, nowMovieId);
+    }else {
+      alert("빈칸이 존재합니다.")
+    }
+  }else if(name == 'update'){
+    if ($pw.value !== null && $pw.value === reviews[id].password && $text.value !== null && $text.value !== "") {
+      reviews[id].text = $text.value;
+      //배열에 저장된 해당 리븅의 텍스트를 새로운 텍스트로 업데이트
+      $reviewList.childNodes[Number(id)+1].querySelector("p.review-text").innerText = $text.value;
+      //화면에 해당 리뷰의 텍스트를 새로운 텍스트로 업데이트
+      saveReviews();
+      //업데이트된 리뷰를 로컬 스토리지에 저장
+    } else {
+      alert("비밀번호가 일치하지 않거나 리뷰 내용이 없습니다.");
+    }
+  }else if(name == 'del'){
+    if ($pw.value !== null && $pw.value === reviews[id].password) {
+      $reviewList.childNodes.forEach((e) => {
+        if(e.id === id){
+          $reviewList.removeChild(e);
+          return false;
+        }
+      })
+      
+      //일치 여부 확인 후 리뷰 목록에서 해당 리뷰 삭제
+      reviews.splice(id, 1);
+      //배열에서 해당 리뷰 삭제
+      saveReviews();
+      //삭제된 리뷰를 로컬 스토리지에 저장
+      alert("삭제되었습니다.");
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
+  }
+  handleClose();
+}
+
+const modal = (name, id = false) => {
+  if(id) $modal.dataset.id = id;
+  if(name === "update") $text.value = reviews[id].text;
+  $modal.classList.replace('hidden', name);
+  document.body.style.overflow = 'hidden';
+}
+
 
 const saveReviews = () => {
   localStorage.setItem(REVIEWS_LS, JSON.stringify(reviews));
@@ -49,43 +101,15 @@ const saveReviews = () => {
 
 const handelDeleteReview = (event) => {
   const btn = event.target;
-  const li = btn.parentNode.parentNode.parentNode;
   //이벤트가 발생한 요소와 그 부모요소인 li찾기
-  const password = prompt("비밀번호를 입력하세요:");
-
-  if (password !== null && password === reviews[li.id].password) {
-    $reviewList.removeChild(li);
-    //일치 여부 확인 후 리뷰 목록에서 해당 리뷰 삭제
-    reviews.splice(li.id, 1);
-    //배열에서 해당 리뷰 삭제
-    saveReviews();
-    //삭제된 리뷰를 로컬 스토리지에 저장
-    alert("삭제되었습니다.");
-  } else {
-    alert("비밀번호가 일치하지 않습니다.");
-  }
+  const li = btn.parentNode.parentNode.parentNode;
+  modal("del", li.id);
 }
 
 const handleUpdateReview = (event) => {
   const btn = event.target;
   const li = btn.parentNode.parentNode.parentNode;
-  const password = prompt("비밀번호를 입력하세요:");
-  console.log(reviews[li.id]);
-  if (password !== null && password === reviews[li.id].password) {
-    const newText = prompt("수정할 리뷰를 입력하세요:", reviews[li.id].text);
-    if (newText !== null && newText !== "") {
-      reviews[li.id].text = newText;
-      //배열에 저장된 해당 리븅의 텍스트를 새로운 텍스트로 업데이트
-      li.querySelector("p.review-text").innerText = newText;
-      //화면에 해당 리뷰의 텍스트를 새로운 텍스트로 업데이트
-      saveReviews();
-      //업데이트된 리뷰를 로컬 스토리지에 저장
-    } else {
-      alert("리뷰를 입력하세요.");
-    }
-  } else {
-    alert("비밀번호가 일치하지 않습니다.");
-  }
+  modal("update", li.id);
 }
 
 const paintReview = (text, userId, password , movieId) => {
