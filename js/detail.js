@@ -81,7 +81,7 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                     <hr class="detail_box1_hr">
                     <h5 class="detail_year">${movieDetails.release_date.substring(0, 4)}</h5>
                     <hr class="detail_box1_hr">
-                    <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
+                    <h5 class="detail_runtime">${movieDetails.runtime}${currentLanguage === 'ko-KR' ? '분' : ' minutes'}</h5>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_certifications">${movieDetails.certification}</h5>
                     <hr class="detail_box1_hr">
@@ -90,15 +90,15 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                 <hr class="detail_box3_hr">
                 <div class="detail_box3">
                     <div class="detail_director">
-                        <h4 class="director_title">감독</h4>
+                        <h4 class="director_title">${currentLanguage === 'ko-KR' ? '감독' : 'Director'}</h4>
                         <h5 class="director_name">${directorNames}</h5>
                     </div>
                     <div class="detail_actors">
-                        <h4 class="actors_title">출연</h4>
+                        <h4 class="actors_title">${currentLanguage === 'ko-KR' ? '출연' : 'Actors'}</h4>
                         <h5 class="actors_name">${actorNames}</h5>
                     </div>
                     <div class="detail_contents">
-                        <h4 class="plot_title">소개</h4>
+                        <h4 class="plot_title">${currentLanguage === 'ko-KR' ? '소개' : 'Introduction'}</h4>
                         <h5 class="detail_plot">${movieDetails.overview}</h5>
                     </div>
                 </div>
@@ -121,6 +121,25 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
         .then(([movieDetails]) => {
             // 영화 상세 데이터를 화면에 표시하기
             displayMovieDetails(movieDetails); // movieCertifications가 필요 없으므로 제거
+
+            // 언어변경 기능
+            const reviewInput = document.getElementById('review');
+            const reviewTitle = document.getElementById('review-title');
+            const submitReviewBtn = document.getElementById('submit-review');
+            const reviewPageTitle = document.getElementById('review-page-title');
+            if (currentLanguage === 'ko-KR') {
+                reviewInput.placeholder = '감상평을 적어주세요!';
+                reviewTitle.textContent = '감상평';
+                submitReviewBtn.textContent = '등록';
+                reviewPageTitle.textContent = '상세페이지';
+            } else if (currentLanguage === 'en-US') {
+                reviewInput.placeholder = 'Write down your review!';
+                reviewTitle.textContent = 'Review';
+                submitReviewBtn.textContent = 'submit';
+                reviewPageTitle.textContent = 'Review Page';
+            }
+
+
         })
         .catch(error => {
             console.error('Error fetching movie details:', error);
