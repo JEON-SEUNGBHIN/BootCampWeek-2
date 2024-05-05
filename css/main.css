@@ -14,16 +14,13 @@ body {
 .inner_wrap2 {
     max-width: 1200px;
     margin: 0 auto;
-
     display: flex;
-    justify-content: space-around;
+    align-items: center; /* 수정된 부분 */
 }
 
-.inner_wrap2 div {
-    width: calc(100% / 3);
+.inner_wrap2 > div {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 10px;
 }
 
 .inner_wrap {
@@ -54,18 +51,53 @@ header {
     border-bottom: 1px solid #ccc;
 }
 
+@media screen and (max-width: 700px) {
+    .inner_wrap2 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #search {
+        margin-top: 10px;
+    }
+
+    #search_input {
+        width: 100%;
+    }
+}
+
+
+
+
 main {
     min-height: calc(100vh - 275px);
 }
 
 
 #logo a {
-    display: block;
+    display: inline-block; /* 인라인 블록으로 설정하여 텍스트를 중앙 정렬 */
     text-align: center;
     font-size: 2rem;
     line-height: 50px;
-    margin: 0 auto;
+
 }
+
+#logo a:hover {
+ color: #f02459; 
+}
+
+#lang_change_btn,
+#heartlink {
+    margin-left: 10px; /* 이미지들 사이의 간격 설정 */
+}
+
+#lang_change_btn,
+#heartlink,
+#pageUp img {
+    width: 30px;
+    height: 30px;
+}
+
 
 #search {
     display: flex;
@@ -216,22 +248,44 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-#footer {
-    margin: 0;
+@media screen and (max-width: 700px) {
+    footer .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #footer {
+        margin: 20;
+    }
+
+    .footer-left {
+        text-align: center;
+    }
+
+    .footer-left a {
+        display: block;
+        margin: 10px 0;
+    }
 }
 
 #footer a {
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: #333; /* 링크 색상 지정 */
+    text-decoration: none; 
+    color: #333; 
+    margin: 10px;
 }
 
 #footer a:hover {
-    color: #007bff; /* 마우스 호버시 링크 색상 변경 */
+    color: #f02459; 
 }
 
+
+
 img {
-    width: 30px;
+    width: 50px;
     height: auto;
 }
+
