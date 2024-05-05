@@ -1,10 +1,15 @@
 
 import { ApiFetch } from "./movie.js"
-import { handleAddReviews, loadReviews } from "./review.js"
+import { handleAddReviews, loadReviews, handleClose } from "./review.js"
 
 
 const $reviewsForm = document.querySelector("#review-form");
 $reviewsForm.addEventListener('submit', handleAddReviews);
+const $close = document.querySelectorAll('.close');
+
+$close.forEach(e => {
+    e.addEventListener('click', handleClose)
+});
 
 
 // detail.js
@@ -92,5 +97,6 @@ const displayMovieDetails = (movieDetails) => {
         .catch(error => {
             console.error('Error fetching movie details:', error);
         });
-
+    document.body.style.overflow = 'hidden';
+    // document.body.style.overflow = 'auto';
 })()

@@ -1,8 +1,13 @@
 let reviews = [];
 const REVIEWS_LS = "reviews";
 const $reviewList = document.querySelector("#review-list");
+const $modal = document.querySelector("#modal");
 const urlParams = new URLSearchParams(window.location.search);
 const nowMovieId = urlParams.get('id');
+
+export const handleClose = (e) => {
+  $modal.classList.add('hidden');
+}
 
 export const handleAddReviews = (e) => {
     e.preventDefault();
