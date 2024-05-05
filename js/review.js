@@ -6,6 +6,8 @@ const nowMovieId = urlParams.get('id');
 
 export const handleAddReviews = (e) => {
     e.preventDefault();
+    // document.body.style.overflow = 'hidden';
+    
     console.log(e.target[0].value);
     if(e.target[0].value){
         let id = prompt("닉네임");

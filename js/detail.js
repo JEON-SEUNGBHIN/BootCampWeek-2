@@ -92,4 +92,5 @@ const displayMovieDetails = (movieDetails) => {
         .catch(error => {
             console.error('Error fetching movie details:', error);
         });
+
 })()

@@ -23,7 +23,7 @@ export const movieListAPI = async (url = `/3/movie/popular?language=${currentLan
     const areaTopratedBtn = document.getElementById("top_rated");
     const areaFooter = document.getElementById("footer");
     if (currentLanguage === "en-US") {
-        areaLogo.textContent = "Movie Search";
+        areaLogo.textContent = "Movie";
         areaPopularBtn.textContent = "Popular";
         areaTopratedBtn.textContent = "Top Reated";
         areaFooter.textContent = "Copyright © Lee JunHyeok All rights reserved."
