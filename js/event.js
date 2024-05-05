@@ -21,7 +21,7 @@ export const handleMenuSelect = (e) => {
             movieListAPI();
         } else if (targetBtn.id === "top_rated") {
             setViewedMenu("top_rated");
-            movieListAPI(`/3/movie/top_rated?language=${currentLanguage}&page=1`);
+            movieListAPI(`/3/movie/top_rated?&page=1`);
         }
         if ($chk) {
             $chk.classList.remove("chk");

@@ -12,10 +12,8 @@ if (changeLangBtn !== null) {
 
         localStorage.setItem('currentLanguage', currentLanguage); // 변경시킨 언어를 로컬 스토리지에 재할당함
 
-        const url = `/3/movie/${viewedMenu}?page=1`;
+        const url = `/3/movie/${viewedMenu}`;
         await movieListAPI(url);
-        // await movieListAPI(`/3/movie/${viewedMenu}?page=1`);
-        // createMovieList(movieList);
     }
     )
 }
@@ -28,4 +26,3 @@ if (!localStorage.getItem("currentLanguage")) {
 
 // 로컬 스토리지에 저장된 언어를 변수에 할당
 export let currentLanguage = localStorage.getItem("currentLanguage");
-console.log(currentLanguage); // 현재 기본 언어 콘솔 출력

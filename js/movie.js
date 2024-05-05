@@ -56,15 +56,6 @@ export const handleMovieItemClick = (e) => {
 
 export const createMovieList = async (movies) => {
     $movieList.textContent = '';
-
-    if (!movies || movies.length === 0) {
-        // movies가 없거나 비어 있을 때 처리
-        const noResultsMessage = document.createElement('p');
-        noResultsMessage.textContent = 'No movies found.';
-        $movieList.appendChild(noResultsMessage);
-        return;
-    }
-
     movies.forEach((e) => {
         if (!e.overview) { // overview 값이 없을 때 순회 제외처리
             return;
