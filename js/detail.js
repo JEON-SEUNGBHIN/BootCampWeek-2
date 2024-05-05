@@ -55,6 +55,7 @@ const getMovieCertifications = async (movieId) => {
   }
 };
 
+
 // 영화 상세 데이터를 가져와서 화면에 표시하는 함수
 const displayMovieDetails = (movieDetails, movieCertifications) => {
     // detail_main 요소 선택
@@ -68,7 +69,7 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
   const actors = movieDetails.credits.cast.slice(0, 10);
   const actorNames = actors.map(actor => actor.name).join(', ');
 
-  // 영화 관람 등급이 존재하는 경우에만 해당 정보를 출력
+  // 영화 관람 등급이 존재하는 경우에만 해당 정보를 출력, 없으면 html 태그 삭제
   const certificationHTML = movieCertifications && movieCertifications.certification && movieCertifications.certification !== 'No Information' ?
   `
   <hr class="certification_hr">
