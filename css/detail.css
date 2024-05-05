@@ -1,7 +1,7 @@
 /* detail css */
 .detail_main{
   display: flex;
-  flex-direction: column; /* 세로 방향으로 요소를 배치합니다. */
+  flex-direction: column; /* 세로 방향으로 요소를 배치 */
   justify-content: center; /* 수직 가운데 정렬 */
   align-items: center; /* 수평 가운데 정렬 */
   margin-top: 50px;
@@ -70,15 +70,16 @@
   background-color: transparent;
 }
 
-/* 이거 버튼 클릭할 때 이벤트 처리 필요하면 스타일 변경해서 쓰세오 */
-#heart_btn_true{
-  color: red;
-}
-
 .detail_box2 {
   display: flex;
   width: 100%;
   margin: 0.3rem;
+}
+
+.certification_hr{
+  background-color: rgb(197, 197, 197);
+  width: 1px;
+  border: 0;
 }
 
 .detail_box3_hr{
