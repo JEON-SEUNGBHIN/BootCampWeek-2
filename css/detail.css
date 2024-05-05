@@ -70,15 +70,16 @@
   background-color: transparent;
 }
 
-/* 이거 버튼 클릭할 때 이벤트 처리 필요하면 스타일 변경해서 쓰세오 */
-#heart_btn_true{
-  color: red;
-}
-
 .detail_box2 {
   display: flex;
   width: 100%;
   margin: 0.3rem;
+}
+
+.certification_hr{
+  background-color: rgb(197, 197, 197);
+  width: 1px;
+  border: 0;
 }
 
 .detail_box3_hr{
