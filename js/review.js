@@ -1,3 +1,5 @@
+import { currentLanguage } from "./language.js";
+
 let reviews = [];
 const REVIEWS_LS = "reviews";
 const $reviewList = document.querySelector("#review-list");
@@ -8,15 +10,15 @@ export const handleAddReviews = (e) => {
   e.preventDefault();
   console.log(e.target[0].value);
   if (e.target[0].value) {
-    let id = prompt("닉네임");
+    let id = prompt(currentLanguage === "ko-KR" ? "닉네임" : "Nickname");
     if (id) {
-      let pw = prompt("비밀번호");
+      let pw = prompt(currentLanguage === "ko-KR" ? "비밀번호" : "Password");
       if (pw) {
         paintReview(e.target[0].value, id, pw, nowMovieId);
       }
     }
   } else {
-    alert("감상평을 입력해주세요!");
+    alert(currentLanguage === "ko-KR" ? "감상평을 입력해주세요." : "Please write down your review.");
   }
 
   e.target[0].value = '';
@@ -44,7 +46,7 @@ const handelDeleteReview = (event) => {
   const btn = event.target;
   const li = btn.parentNode.parentNode.parentNode;
   //이벤트가 발생한 요소와 그 부모요소인 li찾기
-  const password = prompt("비밀번호를 입력하세요:");
+  const password = prompt(currentLanguage === "ko-KR" ? "비밀번호를 입력하세요:" : "Enter your password:");
 
   if (password !== null && password === reviews[li.id].password) {
     $reviewList.removeChild(li);
@@ -53,19 +55,19 @@ const handelDeleteReview = (event) => {
     //배열에서 해당 리뷰 삭제
     saveReviews();
     //삭제된 리뷰를 로컬 스토리지에 저장
-    alert("삭제되었습니다.");
+    alert(currentLanguage === 'ko-KR' ? "삭제되었습니다." : "Deleted successfully.");
   } else {
-    alert("비밀번호가 일치하지 않습니다.");
+    alert(currentLanguage === 'ko-KR' ? "비밀번호가 일치하지 않습니다." : "Incorrect password.");
   }
 }
 
 const handleUpdateReview = (event) => {
   const btn = event.target;
   const li = btn.parentNode.parentNode.parentNode;
-  const password = prompt("비밀번호를 입력하세요:");
+  const password = prompt(currentLanguage === 'ko-KR' ? "비밀번호를 입력하세요:" : "Enter your password:");
   console.log(reviews[li.id]);
   if (password !== null && password === reviews[li.id].password) {
-    const newText = prompt("수정할 리뷰를 입력하세요:", reviews[li.id].text);
+    const newText = prompt(currentLanguage === 'ko-KR' ? "수정할 리뷰를 입력하세요:" : "Enter your updated review:", reviews[li.id].text);
     if (newText !== null && newText !== "") {
       reviews[li.id].text = newText;
       //배열에 저장된 해당 리븅의 텍스트를 새로운 텍스트로 업데이트
@@ -74,10 +76,10 @@ const handleUpdateReview = (event) => {
       saveReviews();
       //업데이트된 리뷰를 로컬 스토리지에 저장
     } else {
-      alert("리뷰를 입력하세요.");
+      alert(currentLanguage === 'ko-KR' ? "리뷰를 입력하세요." : "Please write down your review.");
     }
   } else {
-    alert("비밀번호가 일치하지 않습니다.");
+    alert(currentLanguage === 'ko-KR' ? "비밀번호가 일치하지 않습니다." : "Incorrect password.");
   }
 }
 
@@ -105,8 +107,8 @@ const paintReview = (text, userId, password, movieId) => {
     $text.classList.add('review-text');
     $timeSpan.classList.add('review-date');
 
-    $delBtn.innerText = "리뷰 삭제";
-    $updateBtn.innerText = "리뷰 수정";
+    $delBtn.innerText = (currentLanguage) === "ko-KR" ? "리뷰 삭제" : "Delete review";
+    $updateBtn.innerText = (currentLanguage) === "ko-KR" ? "리뷰 수정" : "Edit review";;
     $delBtn.addEventListener("click", handelDeleteReview);
     $updateBtn.addEventListener("click", handleUpdateReview);
     $id.innerText = userId; // 내용 설정
