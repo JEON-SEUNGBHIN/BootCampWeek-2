@@ -4,10 +4,6 @@ header {
   background-color: #f5f5f5;
   border-bottom: 1px solid #ccc;
 }
-.inner_wrap2 {
-  justify-content: space-between;
-  height: 110px;
-}
 .pick_title {
   font-size: 35px;
   margin: 40px;
@@ -16,9 +12,6 @@ header {
   font-weight: 550;
 }
 
-main {
-  /* height: 100vh; */
-}
 .inner_wrap {
   margin-top: 50px;
 }
