@@ -4,7 +4,6 @@ let hearts = JSON.parse(localStorage.getItem("hearts"));
 function displayHeartedMovies(heartedList) {
   const pickMovie = document.querySelector(".pick_movie");
   const pickNothing = document.querySelector(".pick_nothing")
-  console.log(heartedList.length)
   if (heartedList.length === 0){
     pickNothing.style.display = 'block'
   }
