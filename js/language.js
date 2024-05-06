@@ -19,6 +19,6 @@ changeLangBtn.addEventListener('click', async () => {
     localStorage.setItem('currentLanguage', currentLanguage); // 변경시킨 언어를 로컬 스토리지에 재할당함
     console.log(currentLanguage);  // 버튼 눌러서 변경된 언어 콘솔 출력
 
-    // await movieListAPI(`/3/movie/popular?language=${currentLanguage}&page=1`); // 변경된 국가 코드로 API URL 수정 후 movieListAPI 함수 호출 (카드 다시 뿌리기)
+    await movieListAPI(`/3/movie/popular?language=${currentLanguage}&page=1`); // 변경된 국가 코드로 API URL 수정 후 movieListAPI 함수 호출 (카드 다시 뿌리기)
 }
 )
