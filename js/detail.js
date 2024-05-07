@@ -1,6 +1,6 @@
 import { ApiFetch } from "./movie.js"
 import { currentLanguage } from "./language.js";
-import { handleAddReviews, loadReviews, handleClose, modalOk } from "./review.js"
+import { handleAddReviews, loadReviews, handleClose, modalOk} from "./review.js"
 
 
 const $reviewsForm = document.querySelector("#review-form");
@@ -203,6 +203,8 @@ function clickHeart(event) {
             }
             // 찜하기 버튼 클릭 기능
             document.querySelector(".detail_heart_btn").addEventListener("click", clickHeart);
+
+
         })
         .catch(error => {
             console.error('Error fetching movie details:', error);
