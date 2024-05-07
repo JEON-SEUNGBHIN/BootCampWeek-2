@@ -4,6 +4,7 @@ import { handleMenuSelect, handleScrollSave, handleScrollTop, handleScrollTo } f
 const $pageUp = document.getElementById('pageUp');
 const $mainMenus = document.getElementById("main_menus");
 const $search = document.getElementById('search');
+const $searchInput = document.getElementById('search_input');
 
 
 addEventListener('scroll', handleScrollSave);
@@ -14,6 +15,11 @@ $pageUp.addEventListener('click', handleScrollTop);
 (async function init() {
     await movieListAPI();
     handleScrollTo();
+    if(localStorage.getItem('search') !== null){
+        $searchInput.value = localStorage.getItem('search');
+        $search.dispatchEvent(new Event('submit'));
+        localStorage.removeitem('search');
+    }
 })()
 
 
