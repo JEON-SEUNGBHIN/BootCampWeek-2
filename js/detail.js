@@ -1,6 +1,6 @@
 import { ApiFetch } from "./movie.js"
 import { currentLanguage } from "./language.js";
-import { handleAddReviews, loadReviews, handleClose, modalOk } from "./review.js"
+import { handleAddReviews, loadReviews, handleClose, modalOk} from "./review.js"
 
 
 const $reviewsForm = document.querySelector("#review-form");
@@ -203,8 +203,14 @@ function clickHeart(event) {
             }
             // 찜하기 버튼 클릭 기능
             document.querySelector(".detail_heart_btn").addEventListener("click", clickHeart);
+
+
         })
         .catch(error => {
             console.error('Error fetching movie details:', error);
         });
+
+    //처음 모달 사용시 위로 올라가는 오류 해결 코드
+    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'auto';
 })();
