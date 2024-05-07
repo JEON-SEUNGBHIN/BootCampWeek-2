@@ -73,7 +73,6 @@ export const modalOk = (e) => {
     if ($pw.value !== null && $pw.value === reviewObject.password && $text.value !== null && $text.value !== "") {
       reviewObject.text = $text.value;
       //배열에 저장된 해당 리븅의 텍스트를 새로운 텍스트로 업데이트
-      console.log(document.querySelector("#"+id));
       $reviewList.childNodes.forEach((e) => {
         if (e.id === id) {
           e.querySelector("p.review-text").innerText = $text.value;
