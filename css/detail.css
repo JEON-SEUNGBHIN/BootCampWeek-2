@@ -296,3 +296,25 @@
 #modal.update .modal-box #modal-text{
   display: block;
 }
+
+/* 찜하기 관련 css */
+.detail_heart_btn {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+.detail_heart_btn img {
+  width: 30px;
+}
+.detail_heart_btn:hover img.heartRed,
+.detail_heart_btn img.heartEmpty,
+.detail_heart_btn.clicked:hover img.heartEmpty,
+.detail_heart_btn.clicked img.heartRed {
+  display: block;
+}
+.detail_heart_btn:hover img.heartEmpty,
+.detail_heart_btn img.heartRed,
+.detail_heart_btn.clicked:hover img.heartRed,
+.detail_heart_btn.clicked img.heartEmpty {
+  display: none;
+}

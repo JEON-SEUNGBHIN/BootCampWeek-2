@@ -8,10 +8,12 @@ const $movieList = document.querySelector("#movie-list");
 let movies;
 
 export const handleSearch = (e) => {
-    e.preventDefault();
-    let movieSearch = movies.filter((movie) => movie.title.toLowerCase().includes(e.target[0].value.toLowerCase()));
-    createMovieList(movieSearch);
-}
+  e.preventDefault();
+  let movieSearch = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(e.target[0].value.toLowerCase())
+  );
+  createMovieList(movieSearch);
+};
 
 export const movieListAPI = async (url = `/3/movie/${isViewedNow}?page=1`) => {
     const api = await ApiFetch(url);

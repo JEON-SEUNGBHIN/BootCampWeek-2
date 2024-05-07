@@ -97,8 +97,9 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
             <div class="content_container">
                 <div class="detail_box1">
                     <h2 class="detail_title">${movieDetails.title}</h2>
-                    <button class="detail_heart_btn">
-                        <img src="assets/icon/heart.svg"></img>
+                    <button class="detail_heart_btn" id="${movieDetails.id}">
+                        <img class="heartEmpty" src="assets/icon/heartEmpty.svg"></img>
+                        <img class="heartRed" src="assets/icon/heartRed.svg"></img>
                     </button>
                 </div>
                 <div class="detail_box2">
@@ -107,7 +108,10 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                         <h5>${movieDetails.vote_average}</h5>
                     </div>
                     <hr class="detail_box1_hr">
-                    <h5 class="detail_year">${movieDetails.release_date.substring(0, 4)}</h5>
+                    <h5 class="detail_year">${movieDetails.release_date.substring(
+                      0,
+                      4
+                    )}</h5>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
                     ${certificationHTML}
@@ -132,6 +136,38 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                 <hr class="detail_box3_hr">
             </div>
         `;
+
+  // 박솔 추가 이벤트
+  if (hearts.includes(movieDetails.id.toString())){
+    document.querySelector(".detail_heart_btn").classList.add("clicked");
+  }
+};
+
+// 찜 버튼 클릭 이벤트
+const HEART_LS = "hearts";
+if (localStorage.getItem("hearts") === null){
+  localStorage.setItem("hearts","[]");
+}
+let hearts = JSON.parse(localStorage.getItem("hearts"));
+function clickHeart(event) {
+  const heartBtn = document.querySelector(".detail_heart_btn");
+  const thisId = event.target.parentNode.id;
+
+  // 중복값 방지 조건문
+  if (!hearts.includes(thisId.toString())) {
+    // 찜하지 않은 상태에서 클릭 시 등록 이벤트
+    hearts.push(thisId);
+    localStorage.setItem(HEART_LS, JSON.stringify(hearts));
+    alert("찜한 목록에 저장되었습니다.");
+    heartBtn.classList.add("clicked");
+  } else {
+    // 찜한 상태에서 다시 클릭 시 취소 이벤트
+    const thisIdx = hearts.indexOf(thisId);
+    hearts.splice(thisIdx, 1);
+    localStorage.setItem(HEART_LS, JSON.stringify(hearts));
+    alert("찜한 목록에서 삭제되었습니다.");
+    heartBtn.classList.remove("clicked");
+  }
 }
 
 (function init() {
@@ -165,6 +201,8 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                 submitReviewBtn.textContent = 'submit';
                 reviewPageTitle.textContent = 'Review Page';
             }
+            // 찜하기 버튼 클릭 기능
+            document.querySelector(".detail_heart_btn").addEventListener("click", clickHeart);
         })
         .catch(error => {
             console.error('Error fetching movie details:', error);
