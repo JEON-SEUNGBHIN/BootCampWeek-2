@@ -55,19 +55,51 @@ header {
 
 
 @media screen and (max-width: 700px) {
+    header {
+        height: auto; /* 미디어 쿼리 적용 시 높이를 자동으로 조정하도록 설정 */
+        padding-top: 20px; /* 상단 여백을 줄임 */
+        padding-bottom: 20px; /* 하단 여백을 줄임 */
+    }
+
     .inner_wrap2 {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column; /* 아이콘과 버튼을 세로로 배치 */
+        align-items: center; /* 가운데 정렬 */
+        justify-content: center; /* 가운데 정렬 */
+    }
+
+    #decorated_icons {
+        margin-top: 10px; /* 아이콘과 버튼 사이 간격 조정 */
     }
 
     #search {
-        margin-top: 10px;
+        display: flex; /* 입력 상자와 버튼을 수평으로 정렬하기 위해 flex 사용 */
+        align-items: center; /* 입력 상자를 가운데 정렬 */
     }
 
     #search_input {
+        width: calc(100% - 40px); /* 입력 상자 너비 100%로 설정 */
+        height: 40px;
+        border: 0;
+        outline: none;
+        background-color: #fff;
+    }
+
+    #search button {
+        width: 30px; /* 버튼 너비 조정 */
+        height: 30px; /* 버튼 높이 조정 */
+        cursor: pointer;
+        border: 0;
+        background-color: #fff;
+    }
+
+    #search button img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
+
+
 
 
 
