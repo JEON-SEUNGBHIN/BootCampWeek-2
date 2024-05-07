@@ -58,6 +58,7 @@ export const modalOk = (e) => {
   if (reviews.length !== 0 && id !== undefined) {
     reviewObject = reviews.find((review) => review.reviewId === Number(id));
     reviewIndex = reviews.indexOf(reviewObject);
+    console.log("wda", reviews);
   }
 
   if (name == 'add') {
@@ -129,8 +130,10 @@ const handleUpdateReview = (event) => {
 }
 
 const paintReview = (text, userId, password, movieId, currentTime = new Date(), reviewId = reviews.length !== 0 ? reviews[reviews.length - 1].reviewId + 1 : 0) => {
-
+  
+  
   if (nowMovieId === movieId) {
+    console.log(nowMovieId, movieId);
 
     let html =`
     <li class="review" id="${reviewId}">
