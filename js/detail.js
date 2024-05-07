@@ -43,28 +43,43 @@ const fetchMovieDetails = async (movieId) => {
 
 
 // 영화 관람 등급 정보 가져오는 함수
+// 기존 코드에서 전부 코드 자체를 수정함 (함수화 하여 언어전환 기능에서 재사용하기 위함 - 김병준)
+
+// getMovieCertifications 함수의 첫 번째 조건문과 이어지는 변수 초기화로, fetch를 보낼 때 캐시 메모리에 저장해서 API를 재사용하기 위해 작성함. 이 코드가 없으면 fetch가 2의 배수로 실행되는 에러가 발생함.
 let cachedCertifications = null;
 
+// 영화의 관람 등급 정보를 비동기적으로 가져옴. movieId 인자는 영화의 ID값. 
 const getMovieCertifications = async (movieId) => {
+    // cachedCertifications에 값이 저장되어 있다면 fetch 요청을 하지 않고 캐시된 값을 반환함.
     if (cachedCertifications) {
         return cachedCertifications;
     }
 
     try {
+        // 로컬스토리지에 저장된 현재 언어정보를 변수에 할당함. (예: 'en-US')
         const currentLanguage = localStorage.getItem('currentLanguage');
+        // TMDB API에서 영상물 등급 정보를 요청하는 URL을 기본 구성함.
         const url = `/3/movie/${movieId}/release_dates?language=${currentLanguage}`;
+        // API를 호출함.  ApiFetch는 movie.js에서 베이스 URL을 포함하고 있고, 매개변수로는 바로 위에서 지정한 url을 붙여서 만듦.
         const movieCertifications = await ApiFetch(url);
+        // API 응답을 받은 results 배열을 다시 변수에 할당함. (재사용)
         const certificationResults = movieCertifications.results;
 
+        // 영상물 등급 정보를 변수에 할당하기 위해 변수를 만들고 기본값으로 'No Information' 스트링을 할당함.
         let certification = 'No Information';
 
+        // 영상물 등급 정보 fetch로 응답받은 배열의 길이가 0보다 길면 (데이터가 있으면) 아래 조건문을 실행함.
         if (certificationResults && certificationResults.length > 0) {
+            // 배열에서 'US'가 iso_3166_1 코드로 갖는 데이터를 찾아 변수에 할당함.
             const usReleaseData = certificationResults.find(result => result.iso_3166_1 === 'US');
+            // usReleaseData가 존재하고, release_dates 배열에 데이터가 0보다 길면 (데이터가 있으면) 아래 조건문을 실행함.
             if (usReleaseData && usReleaseData.release_dates.length > 0) {
+                // 첫 번째 release_dates의 certification(영상물 등급 정보) 값을 변수에 재할당함.
                 certification = usReleaseData.release_dates[0].certification;
             }
         }
 
+        // 이렇게 구한 certification(영상물 등급 정보)의 값을 cachedCertifications 변수에 객체로 할당함.
         cachedCertifications = { certification };
         return cachedCertifications;
     } catch (error) {
@@ -88,7 +103,7 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
     const actorNames = actors.map(actor => actor.name).join(', ');
 
     // 영상물 등급 언어변경 기능
-    // TMDB 영상물 등급 한국 기준으로 치환
+    // TMDB 영상물 등급 한국 기준으로 치환하여 객체로 저장.
     const certificationKR = {
         "M": "청소년 관람 불가",
         "B": "청소년 관람 불가",
@@ -105,16 +120,23 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
         "G": "전체 관람가",
     };
 
-    // 영화 관람 등급이 존재하는 경우에만 해당 정보를 출력, 없으면 html 태그 삭제
+    // 영화 등급 정보를 화면에 출력하는 코드
+    // 최초 값은 빈 스트링으로 지정. 빈 스트링으로 할당하지 않아도 되지만 앞으로 값이 채워질 것임을 시멘틱하게 알림.
     let certificationHTML = '';
+    // movieCertifications 변수는 영상물 등급 정보 API Fetch의 결과임. 이 객체에서 certification이라는 영상물 등급 정보가 존재하면서, 그 값이 'no information'이 아니면 아래의 조건문을 실행함.
     if (movieCertifications && movieCertifications.certification && movieCertifications.certification !== 'No Information') {
-        if (localStorage.getItem('currentLanguage') === 'en-US') {
+        // 로컬스토리지에 저장한 현재 언어 정보를 변수에 할당 (재사용 목적)
+        let currentLanguage = localStorage.getItem('currentLanguage');
+        // 현재 언어 정보가 영어일 때 TMDB에서 가져온 미국 기준 영상물 등급 정보를 detail 페이지에 출력함.
+        if (currentLanguage === 'en-US') {
             certificationHTML = `
                 <hr class="certification_hr">
                 <h5 class="detail_certifications">${movieCertifications.certification}</h5>
             `;
-        } else if (localStorage.getItem('currentLanguage') === 'ko-KR') {
+            // 그러나 현재 언어 정보가 한국어일 때는 직접 한국어로 치환시켜 저장한 객체 certificationKR 에서 일치하는 프로퍼티를 찾아 값을 반환함.
+        } else if (currentLanguage === 'ko-KR') {
             const certificationKey = movieCertifications.certification;
+            // 치환된 영상물 등급 정보를 다시 변수에 담아서 아래 템플릿 리터럴에서 출력시킴.
             const certificationValue = certificationKR[certificationKey];
             if (certificationValue) {
                 certificationHTML = `
@@ -181,8 +203,6 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
 
     showMovieList(movieDetails);
 
-    // 언어변경기능 원래 자리
-
     // 박솔 추가 이벤트
     if (hearts.includes(movieDetails.id.toString())) {
         document.querySelector(".detail_heart_btn").classList.add("clicked");
@@ -204,14 +224,14 @@ function clickHeart(event) {
         // 찜하지 않은 상태에서 클릭 시 등록 이벤트
         hearts.push(thisId);
         localStorage.setItem(HEART_LS, JSON.stringify(hearts));
-        alert("찜한 목록에 저장되었습니다.");
+        alert(localStorage.getItem('currentLanguage') === 'ko-KR' ? "찜한 목록에 저장되었습니다." : "You saved it in a list of dimensions.");
         heartBtn.classList.add("clicked");
     } else {
         // 찜한 상태에서 다시 클릭 시 취소 이벤트
         const thisIdx = hearts.indexOf(thisId);
         hearts.splice(thisIdx, 1);
         localStorage.setItem(HEART_LS, JSON.stringify(hearts));
-        alert("찜한 목록에서 삭제되었습니다.");
+        alert(localStorage.getItem('currentLanguage') === 'ko-KR' ? "찜한 목록에서 삭제되었습니다." : "You have deleted it from the list of dimensions.");
         heartBtn.classList.remove("clicked");
     }
 }
@@ -219,26 +239,33 @@ function clickHeart(event) {
 (function init() {
     loadReviews();
 
-    // 언어변경 기능
+    // 한영전환 버튼 클릭 시 언어전환하여 화면에 새로운 영화 카드를 채워넣는 코드
+    // 한영전환 버튼에 이벤트 리스너를 클릭으로 닮.
     document.getElementById('lang_change_btn_detail').addEventListener('click', async () => {
+        // 한영전환 버튼 클릭 시 로컬스토리지에서 currentLanguage라는 변수의 값을 현재 언어와 반대로 재할당함.(토글)
+        // 현재 한글이면 영어로 전환해야 하고, 영어면 한글로 전환해야 하기 때문.
         (localStorage.getItem("currentLanguage")) === 'en-US' ? localStorage.setItem("currentLanguage", 'ko-KR') : localStorage.setItem("currentLanguage", 'en-US');
 
-        // cachedCertifications 초기화
+        // cachedCertifications은 영상물 등급 정보를 저장하는 캐시로 코드 위에서 선언했었는데 이를 초기화함을 null을 할당하여 시멘틱하게 알림.
         cachedCertifications = null;
 
+        // 이 아래는 바뀐 언어정보를 포함해서 fetch를 새롭게 요청하고 화면에 채워넣는 로직임.
+        // ApiFetch 함수를 movie.js에서 기본 구성하고 있기에 재사용하여야 바람직하나 쿼리스트링 이해 부족으로 새롭게 fetch를 함. 학습 후 추후 개선 예정.
         const url = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=credits,release_dates&language=${localStorage.getItem("currentLanguage")}&api_key=21ccf5793f9e51cfba0198fa23b3d541`;
         const movieDetails = await fetch(url);
         const result = await movieDetails.json();
+        // 영화 overview(요약)이 비어있는지 확인하는 로직. 대부분 영화는 overview가 있기에 기본값으로 true를 명시.
         let isOverView = true;
+        // overview가 빈 스트링일 경우 isOverView의 값을 false로 재할당함.
         if (result.overview === '') {
             isOverView = false
         }
+        // 그리고 isOverView가 false일 경우 한국어를 지원하지 않는다는 alert창을 띄움.
+        // TMDB API는 영어는 지원하더라도 한국어를 지원하지 않는 경우가 많고 그 반대는 없기 때문에 영어로 알림을 띄움.
         if (!isOverView) {
             alert('The movie does not support Korean.')
         } else {
-            // console.log(result);
-            // showMovieList(result);
-            // console.log(certificationHTML);
+            // overview에 내용이 있는 경우 HTML을 채우는 함수를 실행함.
             const movieCertifications = await getMovieCertifications(movieId);
             displayMovieDetails(result, movieCertifications);
         }
@@ -257,7 +284,7 @@ function clickHeart(event) {
         .then(([movieDetails, movieCertifications]) => {
             // 영화 상세 데이터를 화면에 표시하기
             displayMovieDetails(movieDetails, movieCertifications);
-            // 언어변경 기능
+            // detail.html 언어변경 기능
             const reviewInput = document.getElementById('review');
             const reviewTitle = document.getElementById('review-title');
             const submitReviewBtn = document.getElementById('submit-review');
