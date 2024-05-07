@@ -42,7 +42,7 @@ const fetchMovieDetails = async (movieId) => {
 // 영화 관람 등급 정보 가져오는 함수
 const getMovieCertifications = async (movieId) => {
     try {
-        const url = `/3/movie/${movieId}/release_dates?language=en-US`;
+        const url = `/3/movie/${movieId}/release_dates`;
         const movieCertifications = await ApiFetch(url);
         const certificationResults = movieCertifications.results;
 
@@ -109,9 +109,9 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                     </div>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_year">${movieDetails.release_date.substring(
-                      0,
-                      4
-                    )}</h5>
+        0,
+        4
+    )}</h5>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
                     ${certificationHTML}
@@ -137,37 +137,37 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
             </div>
         `;
 
-  // 박솔 추가 이벤트
-  if (hearts.includes(movieDetails.id.toString())){
-    document.querySelector(".detail_heart_btn").classList.add("clicked");
-  }
+    // 박솔 추가 이벤트
+    if (hearts.includes(movieDetails.id.toString())) {
+        document.querySelector(".detail_heart_btn").classList.add("clicked");
+    }
 };
 
 // 찜 버튼 클릭 이벤트
 const HEART_LS = "hearts";
-if (localStorage.getItem("hearts") === null){
-  localStorage.setItem("hearts","[]");
+if (localStorage.getItem("hearts") === null) {
+    localStorage.setItem("hearts", "[]");
 }
 let hearts = JSON.parse(localStorage.getItem("hearts"));
 function clickHeart(event) {
-  const heartBtn = document.querySelector(".detail_heart_btn");
-  const thisId = event.target.parentNode.id;
+    const heartBtn = document.querySelector(".detail_heart_btn");
+    const thisId = event.target.parentNode.id;
 
-  // 중복값 방지 조건문
-  if (!hearts.includes(thisId.toString())) {
-    // 찜하지 않은 상태에서 클릭 시 등록 이벤트
-    hearts.push(thisId);
-    localStorage.setItem(HEART_LS, JSON.stringify(hearts));
-    alert("찜한 목록에 저장되었습니다.");
-    heartBtn.classList.add("clicked");
-  } else {
-    // 찜한 상태에서 다시 클릭 시 취소 이벤트
-    const thisIdx = hearts.indexOf(thisId);
-    hearts.splice(thisIdx, 1);
-    localStorage.setItem(HEART_LS, JSON.stringify(hearts));
-    alert("찜한 목록에서 삭제되었습니다.");
-    heartBtn.classList.remove("clicked");
-  }
+    // 중복값 방지 조건문
+    if (!hearts.includes(thisId.toString())) {
+        // 찜하지 않은 상태에서 클릭 시 등록 이벤트
+        hearts.push(thisId);
+        localStorage.setItem(HEART_LS, JSON.stringify(hearts));
+        alert("찜한 목록에 저장되었습니다.");
+        heartBtn.classList.add("clicked");
+    } else {
+        // 찜한 상태에서 다시 클릭 시 취소 이벤트
+        const thisIdx = hearts.indexOf(thisId);
+        hearts.splice(thisIdx, 1);
+        localStorage.setItem(HEART_LS, JSON.stringify(hearts));
+        alert("찜한 목록에서 삭제되었습니다.");
+        heartBtn.classList.remove("clicked");
+    }
 }
 
 (function init() {
