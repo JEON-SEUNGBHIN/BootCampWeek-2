@@ -152,7 +152,9 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
     .catch(error => {
     console.error('Error fetching movie details:', error);
     });
-  document.body.style.overflow = 'hidden';
-  document.body.style.overflow = 'auto';
+
+    //처음 모달 사용시 위로 올라가는 오류 해결 코드
+    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'auto';
 
 })();
