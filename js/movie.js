@@ -9,15 +9,14 @@ let movies;
 
 export const handleSearch = (e) => {
   e.preventDefault();
-  console.log("wda");
-  if(window.location.pathname !== '/'){
-    localStorage.setItem('search', e.target[0].value);
-    window.location = '/';
-  }else {
+  if(window.location.pathname === '/' || window.location.pathname === '/index.html'){
       let movieSearch = movies.filter((movie) =>
         movie.title.toLowerCase().includes(e.target[0].value.toLowerCase())
       );
       createMovieList(movieSearch);
+  }else {
+      localStorage.setItem('search', e.target[0].value);
+      window.location = '/';
   }
 };
 

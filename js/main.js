@@ -17,8 +17,8 @@ $pageUp.addEventListener('click', handleScrollTop);
     handleScrollTo();
     if(localStorage.getItem('search') !== null){
         $searchInput.value = localStorage.getItem('search');
+        localStorage.removeItem('search');
         $search.dispatchEvent(new Event('submit'));
-        localStorage.removeitem('search');
     }
 })()
 
