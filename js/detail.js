@@ -1,6 +1,9 @@
 import { ApiFetch } from "./movie.js"
 import { currentLanguage } from "./language.js";
 import { handleAddReviews, loadReviews, handleClose, modalOk } from "./review.js"
+// URL에서 영화 ID 가져오기
+const urlParams = new URLSearchParams(window.location.search);
+const movieId = urlParams.get('id');
 
 
 const $reviewsForm = document.querySelector("#review-form");
@@ -87,7 +90,8 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
 
 
     // detail_main 요소의 innerHTML을 채워 넣음
-    detailMain.innerHTML = `
+    const showMovieList = (movieDetails) => {
+        detailMain.innerHTML = `
             <div class="img_container">
               <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
                   alt="${movieDetails.title}" class="detail_img">
@@ -109,9 +113,9 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                     </div>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_year">${movieDetails.release_date.substring(
-        0,
-        4
-    )}</h5>
+            0,
+            4
+        )}</h5>
                     <hr class="detail_box1_hr">
                     <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
                     ${certificationHTML}
@@ -136,6 +140,27 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
                 <hr class="detail_box3_hr">
             </div>
         `;
+    }
+
+    showMovieList(movieDetails);
+
+    // 언어변경 기능
+    document.getElementById('lang_change_btn_detail').addEventListener('click', async () => {
+        (localStorage.getItem("currentLanguage")) === 'en-US' ? localStorage.setItem("currentLanguage", 'ko-KR') : localStorage.setItem("currentLanguage", 'en-US');
+        const url = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=credits,release_dates&language=${localStorage.getItem("currentLanguage")}&api_key=21ccf5793f9e51cfba0198fa23b3d541`;
+        const movieDetails = await fetch(url);
+        const result = await movieDetails.json();
+        let isOverView = true;
+        if (result.overview === '') {
+            isOverView = false
+        }
+        if (!isOverView) {
+            alert('The movie does not support Korean.')
+        } else {
+            console.log(result);
+            showMovieList(result);
+        }
+    })
 
     // 박솔 추가 이벤트
     if (hearts.includes(movieDetails.id.toString())) {
@@ -173,9 +198,9 @@ function clickHeart(event) {
 (function init() {
     loadReviews();
 
-    // URL에서 영화 ID 가져오기
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get('id');
+    // // URL에서 영화 ID 가져오기
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const movieId = urlParams.get('id');
 
     // TMDB API를 사용하여 영화 상세 데이터 가져오기
     Promise.all([
