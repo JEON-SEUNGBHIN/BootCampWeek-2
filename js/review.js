@@ -133,7 +133,6 @@ const paintReview = (text, userId, password, movieId, currentTime = new Date(), 
   
   
   if (nowMovieId === movieId) {
-    console.log(nowMovieId, movieId);
 
     let html =`
     <li class="review" id="${reviewId}">
