@@ -152,4 +152,7 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
     .catch(error => {
     console.error('Error fetching movie details:', error);
     });
+  document.body.style.overflow = 'hidden';
+  document.body.style.overflow = 'auto';
+
 })();
