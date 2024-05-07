@@ -26,10 +26,12 @@ function displayHeartedMovies(heartedList) {
 
 const getMovies = async (hearts) => {
   let heartedList = [];
-  for (let i = 0; i < hearts.length; i++) {
-    heartedList.push(
-      await ApiFetch(`/3/movie/${hearts[i]}?original_language="eu" `)
-    );
+  if (hearts !== null){
+    for (let i = 0; i < hearts.length; i++) {
+      heartedList.push(
+        await ApiFetch(`/3/movie/${hearts[i]}?original_language="eu" `)
+      );
+    }
   }
   displayHeartedMovies(heartedList);
 };
