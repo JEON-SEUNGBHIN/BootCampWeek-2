@@ -43,29 +43,35 @@ const fetchMovieDetails = async (movieId) => {
 
 
 // 영화 관람 등급 정보 가져오는 함수
+let cachedCertifications = null;
+
 const getMovieCertifications = async (movieId) => {
+    if (cachedCertifications) {
+        return cachedCertifications;
+    }
+
     try {
-        const url = `/3/movie/${movieId}/release_dates`;
+        const currentLanguage = localStorage.getItem('currentLanguage');
+        const url = `/3/movie/${movieId}/release_dates?language=${currentLanguage}`;
         const movieCertifications = await ApiFetch(url);
         const certificationResults = movieCertifications.results;
 
-        let certificationInf = 'certification';
+        let certification = 'No Information';
 
         if (certificationResults && certificationResults.length > 0) {
-            for (const result of certificationResults) {
-                if (result.iso_3166_1 === 'US') {
-                    certificationInf = result.release_dates[0].certification;
-                    break; // 미국 정보를 찾으면 반복문 종료
-                }
+            const usReleaseData = certificationResults.find(result => result.iso_3166_1 === 'US');
+            if (usReleaseData && usReleaseData.release_dates.length > 0) {
+                certification = usReleaseData.release_dates[0].certification;
             }
         }
-        if (certificationInf !== 'certification') {
-            return { certification: certificationInf };
-        }
+
+        cachedCertifications = { certification };
+        return cachedCertifications;
     } catch (error) {
         console.error('Error fetching movie certifications:', error);
     }
 };
+
 
 
 // 영화 상세 데이터를 가져와서 화면에 표시하는 함수
@@ -81,16 +87,47 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
     const actors = movieDetails.credits.cast.slice(0, 10);
     const actorNames = actors.map(actor => actor.name).join(', ');
 
-    // 영화 관람 등급이 존재하는 경우에만 해당 정보를 출력, 없으면 html 태그 삭제
-    const certificationHTML = movieCertifications && movieCertifications.certification && movieCertifications.certification !== 'No Information' ?
-        `
-  <hr class="certification_hr">
-  <h5 class="detail_certifications">${movieCertifications.certification}</h5>
-  ` : '';
+    // 영상물 등급 언어변경 기능
+    // TMDB 영상물 등급 한국 기준으로 치환
+    const certificationKR = {
+        "M": "청소년 관람 불가",
+        "B": "청소년 관람 불가",
+        "R": "청소년 관람 불가",
+        "N-13": "15세 이상 관람가",
+        "12": "12세 이상 관람가",
+        "12+": "12세 이상 관람가",
+        "12A": "12세 이상 관람가",
+        "PG-13": "12세 이상 관람가",
+        "M/12": "12세 이상 관람가",
+        "11": "12세 이상 관람가",
+        "PG": "12세 이상 관람가",
+        "TP": "전체 관람가",
+        "G": "전체 관람가",
+    };
 
+    // 영화 관람 등급이 존재하는 경우에만 해당 정보를 출력, 없으면 html 태그 삭제
+    let certificationHTML = '';
+    if (movieCertifications && movieCertifications.certification && movieCertifications.certification !== 'No Information') {
+        if (localStorage.getItem('currentLanguage') === 'en-US') {
+            certificationHTML = `
+                <hr class="certification_hr">
+                <h5 class="detail_certifications">${movieCertifications.certification}</h5>
+            `;
+        } else if (localStorage.getItem('currentLanguage') === 'ko-KR') {
+            const certificationKey = movieCertifications.certification;
+            const certificationValue = certificationKR[certificationKey];
+            if (certificationValue) {
+                certificationHTML = `
+                    <hr class="certification_hr">
+                    <h5 class="detail_certifications">${certificationValue}</h5>
+                `;
+            }
+        }
+    }
 
     // detail_main 요소의 innerHTML을 채워 넣음
     const showMovieList = (movieDetails) => {
+        let currentLanguage = localStorage.getItem('currentLanguage');
         detailMain.innerHTML = `
             <div class="img_container">
               <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" 
@@ -144,23 +181,7 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
 
     showMovieList(movieDetails);
 
-    // 언어변경 기능
-    document.getElementById('lang_change_btn_detail').addEventListener('click', async () => {
-        (localStorage.getItem("currentLanguage")) === 'en-US' ? localStorage.setItem("currentLanguage", 'ko-KR') : localStorage.setItem("currentLanguage", 'en-US');
-        const url = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=credits,release_dates&language=${localStorage.getItem("currentLanguage")}&api_key=21ccf5793f9e51cfba0198fa23b3d541`;
-        const movieDetails = await fetch(url);
-        const result = await movieDetails.json();
-        let isOverView = true;
-        if (result.overview === '') {
-            isOverView = false
-        }
-        if (!isOverView) {
-            alert('The movie does not support Korean.')
-        } else {
-            console.log(result);
-            showMovieList(result);
-        }
-    })
+    // 언어변경기능 원래 자리
 
     // 박솔 추가 이벤트
     if (hearts.includes(movieDetails.id.toString())) {
@@ -197,6 +218,32 @@ function clickHeart(event) {
 
 (function init() {
     loadReviews();
+
+    // 언어변경 기능
+    document.getElementById('lang_change_btn_detail').addEventListener('click', async () => {
+        (localStorage.getItem("currentLanguage")) === 'en-US' ? localStorage.setItem("currentLanguage", 'ko-KR') : localStorage.setItem("currentLanguage", 'en-US');
+
+        // cachedCertifications 초기화
+        cachedCertifications = null;
+
+        const url = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=credits,release_dates&language=${localStorage.getItem("currentLanguage")}&api_key=21ccf5793f9e51cfba0198fa23b3d541`;
+        const movieDetails = await fetch(url);
+        const result = await movieDetails.json();
+        let isOverView = true;
+        if (result.overview === '') {
+            isOverView = false
+        }
+        if (!isOverView) {
+            alert('The movie does not support Korean.')
+        } else {
+            // console.log(result);
+            // showMovieList(result);
+            // console.log(certificationHTML);
+            const movieCertifications = await getMovieCertifications(movieId);
+            displayMovieDetails(result, movieCertifications);
+        }
+    }
+    )
 
     // // URL에서 영화 ID 가져오기
     // const urlParams = new URLSearchParams(window.location.search);
