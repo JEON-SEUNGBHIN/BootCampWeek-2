@@ -35,7 +35,7 @@ const getMovies = async (hearts) => {
   }
   displayHeartedMovies(heartedList);
 
-  // 언어변경 기능
+  // 언어변경 기능 (이벤트 리스너)
   document.getElementById('lang_change_btn_heart').addEventListener('click', async () => {
     (localStorage.getItem("currentLanguage")) === 'en-US' ? localStorage.setItem("currentLanguage", 'ko-KR') : localStorage.setItem("currentLanguage", 'en-US');
     // 이전에 표시된 카드들을 모두 제거
@@ -48,6 +48,17 @@ const getMovies = async (hearts) => {
       return movieDetails.json();
     }));
     displayHeartedMovies(newMovies);
+
+    // heart.html 마크업 언어 변경하기
+    const heartPgTitle = document.querySelector('.pick_view'); // 내가 찜한 콘텐츠
+    const pickedNothing = document.querySelector('.pick_detail'); // 찜한 콘텐츠가 없습니다
+    if (localStorage.getItem('currentLanguage') === 'ko-KR') {
+      heartPgTitle.textContent = '내가 찜한 콘텐츠',
+        pickedNothing.textContent = '찜한 콘텐츠가 없습니다.'
+    } else if (localStorage.getItem('currentLanguage') === 'en-US') {
+      heartPgTitle.textContent = 'My picked movies',
+        pickedNothing.textContent = 'There are nothing picked movies.'
+    }
   });
 
 
