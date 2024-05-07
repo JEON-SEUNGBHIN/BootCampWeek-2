@@ -12,7 +12,7 @@ $search.addEventListener('submit', handleSearch);
 $mainMenus.addEventListener('click', handleMenuSelect);
 $pageUp.addEventListener('click', handleScrollTop);
 
-(async function init() {
+(async function init() {    
     await movieListAPI();
     handleScrollTo();
     if(localStorage.getItem('search') !== null){
@@ -21,5 +21,4 @@ $pageUp.addEventListener('click', handleScrollTop);
         $search.dispatchEvent(new Event('submit'));
     }
 })()
-
 
