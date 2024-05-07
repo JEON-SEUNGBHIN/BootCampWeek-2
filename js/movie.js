@@ -9,10 +9,15 @@ let movies;
 
 export const handleSearch = (e) => {
   e.preventDefault();
-  let movieSearch = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(e.target[0].value.toLowerCase())
-  );
-  createMovieList(movieSearch);
+  if(window.location.pathname === '/' || window.location.pathname === '/index.html'){
+    let movieSearch = movies.filter((movie) =>
+        movie.title.toLowerCase().includes(e.target[0].value.toLowerCase())
+    )
+    createMovieList(movieSearch);
+  }else {
+    localStorage.setItem("search", e.target[0].value);
+    window.location = '/';
+  }
 };
 
 export const movieListAPI = async (url = `/3/movie/${isViewedNow}?page=1`) => {
