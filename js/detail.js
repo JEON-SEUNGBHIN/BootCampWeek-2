@@ -117,7 +117,7 @@ const displayMovieDetails = (movieDetails, movieCertifications) => {
             4
         )}</h5>
                     <hr class="detail_box1_hr">
-                    <h5 class="detail_runtime">${movieDetails.runtime}분</h5>
+                    <h5 class="detail_runtime">${movieDetails.runtime}${currentLanguage === 'ko-KR' ? '분' : ' minuets'}</h5>
                     ${certificationHTML}
                     <hr class="detail_box1_hr">
                     <h5 class="detail_genres">${movieDetails.genres.map(genre => genre.name).join(', ')}</h5>
