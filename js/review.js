@@ -73,7 +73,13 @@ export const modalOk = (e) => {
     if ($pw.value !== null && $pw.value === reviewObject.password && $text.value !== null && $text.value !== "") {
       reviewObject.text = $text.value;
       //배열에 저장된 해당 리븅의 텍스트를 새로운 텍스트로 업데이트
-      $reviewList.childNodes[Number(id) + 1].querySelector("p.review-text").innerText = $text.value;
+      console.log(document.querySelector("#"+id));
+      $reviewList.childNodes.forEach((e) => {
+        if (e.id === id) {
+          e.querySelector("p.review-text").innerText = $text.value;
+          return false;
+        }
+      })
       //화면에 해당 리뷰의 텍스트를 새로운 텍스트로 업데이트
       saveReviews();
       //업데이트된 리뷰를 로컬 스토리지에 저장
