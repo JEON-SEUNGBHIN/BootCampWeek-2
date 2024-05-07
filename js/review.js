@@ -62,7 +62,6 @@ export const modalOk = (e) => {
   }
 
   if (name == 'add') {
-    console.log("awd");
     if ($pw.value !== "") {
       paintReview($review.value, $id.value, $pw.value, nowMovieId);
     } else {
