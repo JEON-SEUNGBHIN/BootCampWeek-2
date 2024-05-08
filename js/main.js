@@ -15,6 +15,8 @@ $pageUp.addEventListener('click', handleScrollTop);
 (async function init() {    
     await movieListAPI();
     handleScrollTo();
+
+    
     if(localStorage.getItem('search') !== null){
         $searchInput.value = localStorage.getItem('search');
         localStorage.removeItem('search');
