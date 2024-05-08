@@ -300,7 +300,17 @@ function clickHeart(event) {
                 reviewPageTitle.textContent = 'Review Page';
             }
             // 찜하기 버튼 클릭 기능
-            document.querySelector(".detail_heart_btn").addEventListener("click", clickHeart);
+            // 기존 솔님 코드 변경 (사유 : detail 페이지에서 한영전환 시 찜하기 버튼 작동하지 않음 - 김병준)
+            // document.querySelector(".detail_heart_btn").addEventListener("click", clickHeart);
+
+            // 기존 코드에서는 언어전환 버튼을 눌러 언어 변경을 했을 때 페이지가 새로 로드되면서 찜하기 하트 버튼에 대한 이벤트 리스너가 새로 연결되지 않아 언어변경 이후 이벤트 리스너가 작동하지 않았음.
+            // 바꾼 코드는 언어 변경 버튼을 눌러 페이지가 로드될 때 계속 이벤트 리스너가 끊어지는 하트에 이벤트 리스너를 다는 것보다 버튼의 상위 요소인 .detail_main에 이벤트 리스너를 닮.
+            document.querySelector('.detail_main').addEventListener('click', function (event) {
+                // 클릭된 요소가 detail_heart_btn(하트버튼)이 맞는지 확인함. closest까지 검사하는 이유는 버튼에 하트 이미지가 자식요소로 들어가 있어서 하트 안쪽을 클릭하면 버튼 클릭으로 인식이 안 되기 때문.
+                if (event.target.classList.contains('detail_heart_btn') || event.target.closest('.detail_heart_btn')) {
+                    clickHeart(event);
+                }
+            });
 
 
         })
