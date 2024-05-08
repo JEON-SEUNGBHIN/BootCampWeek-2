@@ -4,6 +4,7 @@ let hearts = JSON.parse(localStorage.getItem("hearts"));
 function displayHeartedMovies(heartedList) {
   const pickMovie = document.querySelector(".pick_movie");
   const pickNothing = document.querySelector(".pick_nothing");
+  let excludedMovies = [];  // 한국어 API 내용 불량으로 한영전환 시 표시 제외될 영화 제목을 저장할 배열
 
   if (heartedList.length === 0) {
     pickNothing.style.display = 'block';
@@ -27,8 +28,15 @@ function displayHeartedMovies(heartedList) {
       `;
       movieItem.addEventListener("click", handleMovieItemClick);
       pickMovie.appendChild(movieItem);
+    } else {
+      // overview가 비어 있으면 제목을 excludedMovies 배열에 추가
+      excludedMovies.push(e.title);
     }
   });
+  // excludedMovies 배열에 제목이 하나 이상 있으면 alert를 통해 사용자에게 알림
+  if (excludedMovies.length > 0) {
+    alert(excludedMovies.join(", ") + " 영화는 한국어 설명이 지원되지 않아 표시에서 제외됩니다.");
+  }
 }
 
 const getMovies = async (hearts) => {
