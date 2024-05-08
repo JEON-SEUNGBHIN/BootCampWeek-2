@@ -240,7 +240,7 @@ function clickHeart(event) {
 
     // 한영전환 버튼 클릭 시 언어전환하여 화면에 새로운 영화 카드를 채워넣는 코드
     // 한영전환 버튼에 이벤트 리스너를 클릭으로 닮.
-    document.getElementById('lang_change_btn_detail').addEventListener('click', async () => {
+    document.getElementById('lang_change_btn').addEventListener('click', async () => {
         // 한영전환 버튼 클릭 시 로컬스토리지에서 currentLanguage라는 변수의 값을 현재 언어와 반대로 재할당함.(토글)
         // 현재 한글이면 영어로 전환해야 하고, 영어면 한글로 전환해야 하기 때문.
         (localStorage.getItem("currentLanguage")) === 'en-US' ? localStorage.setItem("currentLanguage", 'ko-KR') : localStorage.setItem("currentLanguage", 'en-US');
