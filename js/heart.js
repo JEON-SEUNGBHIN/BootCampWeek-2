@@ -3,25 +3,40 @@ let hearts = JSON.parse(localStorage.getItem("hearts"));
 
 function displayHeartedMovies(heartedList) {
   const pickMovie = document.querySelector(".pick_movie");
-  const pickNothing = document.querySelector(".pick_nothing")
+  const pickNothing = document.querySelector(".pick_nothing");
+  let excludedMovies = [];  // 한국어 API 내용 불량으로 한영전환 시 표시 제외될 영화 제목을 저장할 배열
+
   if (heartedList.length === 0) {
-    pickNothing.style.display = 'block'
+    pickNothing.style.display = 'block';
+  } else {
+    pickNothing.style.display = 'none';
   }
+
   heartedList.forEach((e) => {
-    const movieItem = document.createElement("div");
-    movieItem.classList.add("movie");
-    movieItem.dataset.movieId = e.id;
-    movieItem.innerHTML = `
-          <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
-          <div class="hover">
-              <h3 class="title bold">${e.title}</h3>
-              <p>${e.overview}</p>
-              <span>평점: ${e.vote_average}</span>
-          </div>
+    // overview가 빈 스트링이 아닌 경우에만 찜한 목록을 표시하도록 수정 (준혁님 피드백으로 추가 - 김병준)
+    if (e.overview !== '') {
+      const movieItem = document.createElement("div");
+      movieItem.classList.add("movie");
+      movieItem.dataset.movieId = e.id;
+      movieItem.innerHTML = `
+        <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.title}">
+        <div class="hover">
+          <h3 class="title bold">${e.title}</h3>
+          <p>${e.overview}</p>
+          <span>평점: ${e.vote_average}</span>
+        </div>
       `;
-    movieItem.addEventListener("click", handleMovieItemClick);
-    pickMovie.appendChild(movieItem);
+      movieItem.addEventListener("click", handleMovieItemClick);
+      pickMovie.appendChild(movieItem);
+    } else {
+      // overview가 비어 있으면 제목을 excludedMovies 배열에 추가
+      excludedMovies.push(e.title);
+    }
   });
+  // excludedMovies 배열에 제목이 하나 이상 있으면 alert를 통해 사용자에게 알림
+  if (excludedMovies.length > 0) {
+    alert(excludedMovies.join(", ") + " 영화는 한국어 설명이 지원되지 않아 표시에서 제외됩니다.");
+  }
 }
 
 const getMovies = async (hearts) => {
