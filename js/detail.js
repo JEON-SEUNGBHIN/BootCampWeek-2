@@ -1,6 +1,8 @@
 import { ApiFetch } from "./movie.js"
 import { currentLanguage } from "./language.js";
 import { handleAddReviews, loadReviews, handleClose, modalOk } from "./review.js"
+const urlParams = new URLSearchParams(window.location.search);
+const movieId = urlParams.get('id');
 
 
 const $reviewsForm = document.querySelector("#review-form");
