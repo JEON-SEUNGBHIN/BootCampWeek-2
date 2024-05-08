@@ -3,24 +3,31 @@ let hearts = JSON.parse(localStorage.getItem("hearts"));
 
 function displayHeartedMovies(heartedList) {
   const pickMovie = document.querySelector(".pick_movie");
-  const pickNothing = document.querySelector(".pick_nothing")
+  const pickNothing = document.querySelector(".pick_nothing");
+
   if (heartedList.length === 0) {
-    pickNothing.style.display = 'block'
+    pickNothing.style.display = 'block';
+  } else {
+    pickNothing.style.display = 'none';
   }
+
   heartedList.forEach((e) => {
-    const movieItem = document.createElement("div");
-    movieItem.classList.add("movie");
-    movieItem.dataset.movieId = e.id;
-    movieItem.innerHTML = `
-          <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.id}">
-          <div class="hover">
-              <h3 class="title bold">${e.title}</h3>
-              <p>${e.overview}</p>
-              <span>평점: ${e.vote_average}</span>
-          </div>
+    // overview가 빈 스트링이 아닌 경우에만 찜한 목록을 표시하도록 수정 (준혁님 피드백으로 추가 - 김병준)
+    if (e.overview !== '') {
+      const movieItem = document.createElement("div");
+      movieItem.classList.add("movie");
+      movieItem.dataset.movieId = e.id;
+      movieItem.innerHTML = `
+        <img src="https://image.tmdb.org/t/p/w500${e.poster_path}" alt="${e.title}">
+        <div class="hover">
+          <h3 class="title bold">${e.title}</h3>
+          <p>${e.overview}</p>
+          <span>평점: ${e.vote_average}</span>
+        </div>
       `;
-    movieItem.addEventListener("click", handleMovieItemClick);
-    pickMovie.appendChild(movieItem);
+      movieItem.addEventListener("click", handleMovieItemClick);
+      pickMovie.appendChild(movieItem);
+    }
   });
 }
 
