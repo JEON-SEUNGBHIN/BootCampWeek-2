@@ -9,11 +9,17 @@ const $searchInput = document.getElementById('search_input');
 
 addEventListener('scroll', handleScrollSave);
 $search.addEventListener('submit', handleSearch);
-$mainMenus.addEventListener('click', handleMenuSelect);
-$pageUp.addEventListener('click', handleScrollTop);
+if($pageUp){
+    $pageUp.addEventListener('click', handleScrollTop);
+}
+if($mainMenus){
+    $mainMenus.addEventListener('click', handleMenuSelect);
+}
 
-(async function init() {    
-    await movieListAPI();
+(async function init() {
+    if($mainMenus){
+        await movieListAPI();
+    }    
     handleScrollTo();
 
     

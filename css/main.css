@@ -129,9 +129,12 @@ main {
 
 #lang_change_btn,
 #heartlink,
+#lang_change_btn_heart,
+#lang_change_btn_detail,
 #pageUp img {
     width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 
 
