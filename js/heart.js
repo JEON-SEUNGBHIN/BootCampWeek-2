@@ -64,8 +64,8 @@ const getMovies = async (hearts) => {
     }));
     displayHeartedMovies(newMovies);
 
+    titleLanguage();
   });
-  titleLanguage();
 
 };
 
