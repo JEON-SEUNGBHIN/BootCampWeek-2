@@ -64,20 +64,26 @@ const getMovies = async (hearts) => {
     }));
     displayHeartedMovies(newMovies);
 
+  });
+  titleLanguage();
+
+};
+
+const titleLanguage = () => {
     // heart.html 마크업 언어 변경하기
     const heartPgTitle = document.querySelector('.pick_view'); // 내가 찜한 콘텐츠
     const pickedNothing = document.querySelector('.pick_detail'); // 찜한 콘텐츠가 없습니다
     if (localStorage.getItem('currentLanguage') === 'ko-KR') {
       heartPgTitle.textContent = '내가 찜한 콘텐츠',
-        pickedNothing.textContent = '찜한 콘텐츠가 없습니다.'
+      pickedNothing.textContent = '찜한 콘텐츠가 없습니다.'
     } else if (localStorage.getItem('currentLanguage') === 'en-US') {
       heartPgTitle.textContent = 'My picked movies',
-        pickedNothing.textContent = 'There are nothing picked movies.'
+      pickedNothing.textContent = 'There are nothing picked movies.'
     }
-  });
+}
 
 
-};
 (function init() {
   getMovies(hearts);
+  titleLanguage();
 })();
